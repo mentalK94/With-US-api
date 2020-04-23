@@ -19,4 +19,20 @@
 		SELECT * FROM product
 	</select>
 
+	<!--데이터 수정 -->
+	<update id="updateProduct">
+		UPDATE product SET
+		name = #{name},
+		category = #{category},
+		price = #{price},
+		manufacturer = #{manufacturer},
+		stock = #{stock},
+		description = #{description}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="deleteProduct">
+		DELETE FROM product
+		WHERE id = #{id}
+	</delete>
 </mapper>
