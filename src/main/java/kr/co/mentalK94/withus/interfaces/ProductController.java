@@ -15,7 +15,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/")
-    public List<Product> list() { //
+    public List<Product> list() throws Exception {
         return productService.getProductList();
     }
 }
