@@ -28,4 +28,8 @@ public class ProductService {
     public void updateProduct(Product product, Long id) {
         productMapper.updateProduct(product, id);
     }
+
+    public int deleteProduct(Long id) {
+        return productMapper.deleteProduct(id);
+    }
 }

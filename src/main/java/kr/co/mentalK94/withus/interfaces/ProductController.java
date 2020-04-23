@@ -3,6 +3,7 @@ package kr.co.mentalK94.withus.interfaces;
 import kr.co.mentalK94.withus.applications.ProductService;
 import kr.co.mentalK94.withus.domains.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,5 +56,16 @@ public class ProductController {
                 .build();
         productService.updateProduct(product, id);
         return "product update success";
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        int deleteResult = productService.deleteProduct(id);
+
+        if(deleteResult == 0) { // 삭제가 되지 않은 경우
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

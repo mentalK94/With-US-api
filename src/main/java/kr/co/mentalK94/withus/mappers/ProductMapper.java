@@ -19,5 +19,5 @@ public interface ProductMapper {
 
     void updateProduct(@Param("product") Product product, @Param("id")Long id);
 
-    void deleteProduct(Long id);
+    int deleteProduct(Long id);
 }
