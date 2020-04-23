@@ -31,7 +31,7 @@ public class DataSourceConfiguration {
     )  throws  Exception{
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("mapper/**/*.xml"));
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("mappers/**/*.xml"));
 
         return sqlSessionFactoryBean.getObject();
     }
