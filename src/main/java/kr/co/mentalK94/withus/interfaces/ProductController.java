@@ -42,4 +42,18 @@ public class ProductController {
         URI location = new URI("/products/" + product.getId());
         return ResponseEntity.created(location).body("product insert success");
     }
+
+    @PatchMapping("/products/{id}")
+    public String update(@PathVariable("id") Long id, @RequestBody Product resource) {
+
+        Product product = Product.builder().name(resource.getName())
+                .category(resource.getCategory())
+                .price(resource.getPrice())
+                .manufacturer(resource.getManufacturer())
+                .stock(resource.getStock())
+                .description(resource.getDescription())
+                .build();
+        productService.updateProduct(product, id);
+        return "product update success";
+    }
 }

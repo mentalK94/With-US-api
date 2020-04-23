@@ -24,4 +24,8 @@ public class ProductService {
     public void addProduct(Product product) {
         productMapper.insertProduct(product);
     }
+
+    public void updateProduct(Product product, Long id) {
+        productMapper.updateProduct(product, id);
+    }
 }

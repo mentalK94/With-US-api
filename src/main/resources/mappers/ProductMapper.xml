@@ -20,14 +20,14 @@
 	</select>
 
 	<!--데이터 수정 -->
-	<update id="updateProduct">
+	<update id="updateProduct" parameterType="map">
 		UPDATE product SET
-		name = #{name},
-		category = #{category},
-		price = #{price},
-		manufacturer = #{manufacturer},
-		stock = #{stock},
-		description = #{description}
+		name = #{product.name},
+		category = #{product.category},
+		price = #{product.price},
+		manufacturer = #{product.manufacturer},
+		stock = #{product.stock},
+		description = #{product.description}
 		WHERE id = #{id}
 	</update>
 
