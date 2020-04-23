@@ -12,7 +12,7 @@ public interface ProductMapper {
 
     List<Product> selectProductList() throws Exception;
 
-    Product selectProduct() throws Exception;
+    Product selectProduct(Long id) throws Exception;
 
     void insertProduct(Product product);
 }

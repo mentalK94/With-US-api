@@ -4,6 +4,7 @@ import kr.co.mentalK94.withus.applications.ProductService;
 import kr.co.mentalK94.withus.domains.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -14,8 +15,13 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/")
+    @GetMapping("/products")
     public List<Product> list() throws Exception {
         return productService.getProductList();
+    }
+
+    @GetMapping("/products/{id}")
+    public Product detail(@PathVariable("id") Long id) throws Exception {
+        return productService.getProduct(id);
     }
 }

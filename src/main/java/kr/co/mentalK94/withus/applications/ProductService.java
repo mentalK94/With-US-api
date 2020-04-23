@@ -16,4 +16,8 @@ public class ProductService {
     public List<Product> getProductList() throws Exception {
         return productMapper.selectProductList();
     }
+
+    public Product getProduct(Long id) throws Exception {
+        return productMapper.selectProduct(id);
+    }
 }
