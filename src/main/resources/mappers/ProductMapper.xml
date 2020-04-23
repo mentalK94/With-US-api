@@ -3,7 +3,7 @@
 <mapper namespace="kr.co.mentalK94.withus.mappers.ProductMapper">
 
     <!-- 데이터 삽입 -->
-    <insert id = "insertProduct">
+    <insert id = "insertProduct" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.Product">
 		INSERT INTO product(name, category, price, manufacturer, stock, description)
 					VALUES(#{name}, #{category}, #{price}, #{manufacturer}, #{stock}, #{description})
 	</insert>

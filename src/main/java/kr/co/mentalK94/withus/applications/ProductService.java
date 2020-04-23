@@ -20,4 +20,8 @@ public class ProductService {
     public Product getProduct(Long id) throws Exception {
         return productMapper.selectProduct(id);
     }
+
+    public void addProduct(Product product) {
+        productMapper.insertProduct(product);
+    }
 }
