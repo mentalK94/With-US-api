@@ -1,14 +1,21 @@
 package kr.co.mentalK94.withus.interfaces;
 
+import ch.qos.logback.core.CoreConstants;
 import kr.co.mentalK94.withus.applications.ProductService;
 import kr.co.mentalK94.withus.domains.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -28,7 +35,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<?> create(@RequestBody Product resource) throws URISyntaxException {
+    public ResponseEntity<?> create(@RequestBody Product resource, HttpServletRequest request) throws URISyntaxException {
 
         Product product = Product.builder().name(resource.getName())
                                            .category(resource.getCategory())
@@ -37,6 +44,29 @@ public class ProductController {
                                             .stock(resource.getStock())
                                             .description(resource.getDescription())
                                             .build();
+
+        MultipartFile productImage = product.getProductImage();
+        String rootDir = request.getSession().getServletContext().getRealPath("D:\\hansol\\With-us\\");
+        Path savePath = Paths.get(rootDir+"With-US-Web\\public\\img\\uploadImages\\"+productImage.getOriginalFilename());
+
+        if(!productImage.isEmpty()) {
+            System.out.println("============= file start ===============");
+            System.out.println("name : " + productImage.getName());
+            System.out.println("filename : " + productImage.getOriginalFilename());
+            System.out.println("size: " + productImage.getSize());
+            System.out.println("savePath : " + savePath);
+            System.out.println("============= file end =================");
+        }
+
+        if(productImage != null && !productImage.isEmpty()) {
+            try {
+                productImage.transferTo(new File(savePath.toString()));
+            } catch (IllegalStateException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        product.setImageFileName(productImage.getOriginalFilename());
 
         productService.addProduct(product);
 

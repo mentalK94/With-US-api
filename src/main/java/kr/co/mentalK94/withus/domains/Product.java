@@ -1,6 +1,8 @@
 package kr.co.mentalK94.withus.domains;
 
 import lombok.*;
+import org.springframework.data.annotation.Transient;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -22,4 +24,9 @@ public class Product {
     private int stock; // 제품 재고
 
     private String description; // 제품 설명
+
+    @Transient
+    private MultipartFile productImage; // 제품 이미지
+
+    private String imageFileName; // 제품 이미지 명
 }
