@@ -4,12 +4,16 @@ import lombok.*;
 import org.springframework.data.annotation.Transient;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Product {
+public class Product implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Long id; // 제품 id
 
@@ -25,7 +29,6 @@ public class Product {
 
     private String description; // 제품 설명
 
-    @Transient
     private MultipartFile productImage; // 제품 이미지
 
     private String imageFileName; // 제품 이미지 명

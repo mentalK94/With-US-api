@@ -19,5 +19,7 @@ public interface ProductMapper {
 
     void updateProduct(@Param("product") Product product, @Param("id")Long id);
 
+    void imageUpdate(String imageFileName, @Param("id")Long id);
+
     int deleteProduct(Long id);
 }

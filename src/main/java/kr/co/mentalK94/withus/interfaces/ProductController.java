@@ -1,11 +1,13 @@
 package kr.co.mentalK94.withus.interfaces;
 
-import ch.qos.logback.core.CoreConstants;
 import kr.co.mentalK94.withus.applications.ProductService;
 import kr.co.mentalK94.withus.domains.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,7 +37,19 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<?> create(@RequestBody Product resource, HttpServletRequest request) throws URISyntaxException {
+    public ResponseEntity<?> create(@RequestBody Product resource,
+                                    BindingResult result,
+                                    HttpServletRequest request)
+            throws URISyntaxException {
+
+        if(result.hasErrors()) {
+            System.out.println("form data has some errors");
+            List<ObjectError> errors = result.getAllErrors();
+
+            for(ObjectError error : errors) {
+                System.out.println(error.getDefaultMessage());
+            }
+        }
 
         Product product = Product.builder().name(resource.getName())
                                            .category(resource.getCategory())
@@ -45,33 +59,12 @@ public class ProductController {
                                             .description(resource.getDescription())
                                             .build();
 
-        MultipartFile productImage = product.getProductImage();
-        String rootDir = request.getSession().getServletContext().getRealPath("D:\\hansol\\With-us\\");
-        Path savePath = Paths.get(rootDir+"With-US-Web\\public\\img\\uploadImages\\"+productImage.getOriginalFilename());
-
-        if(!productImage.isEmpty()) {
-            System.out.println("============= file start ===============");
-            System.out.println("name : " + productImage.getName());
-            System.out.println("filename : " + productImage.getOriginalFilename());
-            System.out.println("size: " + productImage.getSize());
-            System.out.println("savePath : " + savePath);
-            System.out.println("============= file end =================");
-        }
-
-        if(productImage != null && !productImage.isEmpty()) {
-            try {
-                productImage.transferTo(new File(savePath.toString()));
-            } catch (IllegalStateException | IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        product.setImageFileName(productImage.getOriginalFilename());
+        // product.setImageFileName(productImage.getOriginalFilename());
 
         productService.addProduct(product);
 
         URI location = new URI("/products/" + product.getId());
-        return ResponseEntity.created(location).body("product insert success");
+        return ResponseEntity.created(location).body(product.getId());
     }
 
     @PatchMapping("/products/{id}")
@@ -84,6 +77,7 @@ public class ProductController {
                 .stock(resource.getStock())
                 .description(resource.getDescription())
                 .build();
+
         productService.updateProduct(product, id);
         return "product update success";
     }

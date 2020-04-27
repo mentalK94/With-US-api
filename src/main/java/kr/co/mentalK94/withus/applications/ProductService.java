@@ -29,6 +29,10 @@ public class ProductService {
         productMapper.updateProduct(product, id);
     }
 
+    public void imageUpdate(String imageFileName, Long id) {
+        productMapper.imageUpdate(imageFileName, id);
+    }
+
     public int deleteProduct(Long id) {
         return productMapper.deleteProduct(id);
     }
