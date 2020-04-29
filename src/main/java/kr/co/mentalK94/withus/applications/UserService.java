@@ -19,6 +19,7 @@ public class UserService {
 
     Logger logger = LoggerFactory.getLogger(UserService.class);
 
+    UserService(PasswordEncoder passwordEncoder, UserMapper userMaapper) {
         this.passwordEncoder = passwordEncoder;
         this.userMaapper = userMaapper;
     }
@@ -27,7 +28,7 @@ public class UserService {
 
         logger.info(user.getPassword());
 
-        // �스�드 �호�싱)
+        // 패스워드 해싱
         String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
         logger.info(encodedPassword);
         user.setPassword(encodedPassword);
@@ -40,11 +41,11 @@ public class UserService {
     public User authenticate(String email, String password) {
         User user = userMaapper.selectByUserEmail(email);
 
-        if(user == null) { // email존재�� �는 경우
+        if(user == null) { // email존재�� �는 경우
             throw new AuthenticationWrongException();
         }
 
-        if(!passwordEncoder.matches(password, user.getPassword())) { // �스�드가 �치�� �는 경우
+        if(!passwordEncoder.matches(password, user.getPassword())) { // �스�드가 �치�� �는 경우
             throw new AuthenticationWrongException();
         }
 
