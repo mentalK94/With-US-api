@@ -1,0 +1,55 @@
+package kr.co.mentalK94.withus.interfaces;
+
+import kr.co.mentalK94.withus.applications.UserService;
+import kr.co.mentalK94.withus.domains.User;
+import kr.co.mentalK94.withus.utils.JWTUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+@RestController
+@CrossOrigin // cors 허용
+public class LoginController {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private JWTUtil jwtUtil;
+
+    Logger logger = LoggerFactory.getLogger(LoginController.class);
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> login(
+            @RequestBody LoginRequestDTO resource
+    ) throws URISyntaxException {
+
+        String email = resource.getEmail();
+        String password = resource.getPassword();
+
+        logger.info(email);
+        logger.info(password);
+
+        User user = userService.authenticate(email, password);
+
+        logger.info("user id : " + user.getId());
+        logger.info(user.getName());
+
+        String accessToken = jwtUtil.crateToken(user.getId(), user.getName());
+
+        logger.info(accessToken);
+        LoginResponseDTO loginResponseDTO = LoginResponseDTO.builder().accessToken(accessToken).build();
+
+        String url = "/login";
+
+        return ResponseEntity.created(new URI(url)).body(loginResponseDTO);
+    }
+}

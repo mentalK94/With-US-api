@@ -9,9 +9,15 @@
 	</insert>
 
     <!--데이터 조회 -->
-    <select id="selectUser" resultType="kr.co.mentalK94.withus.domains.User">
+	<select id="selectUser" resultType="kr.co.mentalK94.withus.domains.User">
 		SELECT * FROM user
 		WHERE id = #{id}
+	</select>
+
+	<!--데이터 조회 -->
+	<select id="selectByUserEmail" resultType="kr.co.mentalK94.withus.domains.User">
+		SELECT * FROM user
+		WHERE email = #{email}
 	</select>
 
     <!--데이터 전체조회 -->
