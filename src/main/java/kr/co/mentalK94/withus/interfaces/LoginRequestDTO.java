@@ -10,4 +10,6 @@ public class LoginRequestDTO { // 이 DTO의 역할이 무엇인지 정확히 �
     private String password;
 
     private String name;
+
+    private Long userId;
 }

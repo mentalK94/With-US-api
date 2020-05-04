@@ -51,4 +51,8 @@ public class UserService {
 
         return user;
     }
+
+    public User getMyUser(Long userId) {
+        return userMapper.selectByUserId(userId);
+    }
 }

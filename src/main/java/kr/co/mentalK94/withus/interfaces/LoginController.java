@@ -1,5 +1,6 @@
 package kr.co.mentalK94.withus.interfaces;
 
+import io.jsonwebtoken.Claims;
 import kr.co.mentalK94.withus.applications.UserService;
 import kr.co.mentalK94.withus.domains.User;
 import kr.co.mentalK94.withus.utils.JWTUtil;
@@ -7,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,5 +53,23 @@ public class LoginController {
         String url = "/login";
 
         return ResponseEntity.created(new URI(url)).body(loginResponseDTO);
+    }
+
+    @PostMapping("/loginUser")
+    public User loginUser(Authentication authentication) {
+
+        logger.info("auth : " + authentication);
+        Claims claims = (Claims) authentication.getPrincipal();
+
+        Long userId = claims.get("userId", Long.class);
+
+        User user = userService.getMyUser(userId);
+        User loginUser = User.builder().address(user.getAddress())
+                .email(user.getEmail()).name(user.getName())
+                .phone(user.getPhone())
+                .build();
+
+        logger.info("loginUser : " + loginUser.getName());
+        return loginUser;
     }
 }
