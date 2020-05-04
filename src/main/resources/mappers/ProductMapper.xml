@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.mentalK94.withus.dao.ProductDAOImpl">
+<mapper namespace="kr.co.mentalK94.withus.mappers.ProductMapper">
 
-    <!-- 데이터 삽입 -->
-    <insert id = "insertProduct" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.Product">
+	<!-- 데이터 삽입 -->
+	<insert id = "insertProduct" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.Product">
 		INSERT INTO product(name, category, price, manufacturer, stock, description, imageFileName)
 					VALUES(#{name}, #{category}, #{price}, #{manufacturer}, #{stock}, #{description}, #{imageFileName})
-
 	</insert>
 
-    <!--데이터 조회 -->
-    <select id="selectProduct" resultType="kr.co.mentalK94.withus.dao.ProductDAOImpl">
-		SELECT * FROM Product
+	<!--데이터 조회 -->
+	<select id="selectProduct" resultType="kr.co.mentalK94.withus.domains.Product">
+		SELECT * FROM product
 		WHERE id = #{id}
 	</select>
 
-    <!--데이터 전체조회 -->
-    <select id="selectProductList" resultType="kr.co.mentalK94.withus.dao.ProductDAOImpl">
-		SELECT * FROM Product
+	<!--데이터 전체조회 -->
+	<select id="selectProductList" resultType="kr.co.mentalK94.withus.domains.Product">
+		SELECT * FROM product
 	</select>
 
 	<!--데이터 수정 -->

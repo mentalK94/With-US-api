@@ -13,15 +13,15 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     @Autowired
-    private UserMapper userMaapper;
+    private UserMapper userMapper;
 
     PasswordEncoder passwordEncoder;
 
     Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    UserService(PasswordEncoder passwordEncoder, UserMapper userMaapper) {
+    UserService(PasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.passwordEncoder = passwordEncoder;
-        this.userMaapper = userMaapper;
+        this.userMapper = userMapper;
     }
 
     public void addUser(User user) {
@@ -33,13 +33,13 @@ public class UserService {
         logger.info(encodedPassword);
         user.setPassword(encodedPassword);
 
-        userMaapper.insertUser(user);
+        userMapper.insertUser(user);
     }
 
 
     // 로그로직
     public User authenticate(String email, String password) {
-        User user = userMaapper.selectByUserEmail(email);
+        User user = userMapper.selectByUserEmail(email);
 
         if(user == null) { // email존재�� �는 경우
             throw new AuthenticationWrongException();
