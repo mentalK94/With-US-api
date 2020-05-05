@@ -2,6 +2,8 @@ package kr.co.mentalK94.withus.filters;
 
 import io.jsonwebtoken.Claims;
 import kr.co.mentalK94.withus.utils.JWTUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,9 +21,12 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
     private JWTUtil jwtUtil;
 
+    private Logger logger;
+
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
         super(authenticationManager);
-        this.jwtUtil =jwtUtil;
+        this.jwtUtil = jwtUtil;
+        this.logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
     }
 
     @Override
@@ -29,7 +34,11 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
                                     HttpServletResponse response,
                                     FilterChain chain)
             throws ServletException, IOException {
+
+        logger.info("request: " + request);
         Authentication authentication = getAuthentication(request);
+
+        logger.info("authentication: " + authentication);
         if(authentication != null){
             SecurityContext context = SecurityContextHolder.getContext();
             context.setAuthentication(authentication);
