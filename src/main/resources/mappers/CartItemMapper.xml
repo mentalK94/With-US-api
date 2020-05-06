@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mentalK94.withus.mappers.CartItemMapper">
+
+    <!-- 데이터 삽입 -->
+    <insert id = "insertCartItem" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.CartItem">
+		INSERT INTO cartitem(productId, cartId, quantity, totalPrice)
+					VALUES(#{productId}, #{cartId}, #{quantity}, #{totalPrice})
+	</insert>
+
+    <!--데이터 조회 -->
+    <select id="selectCartItemByCartId" resultType="kr.co.mentalK94.withus.domains.CartItem">
+		SELECT * FROM cartitem
+		WHERE cartId = #{cartId}
+	</select>
+
+    <!--데이터 수정 -->
+    <update id="updateCartItem" parameterType="map">
+		UPDATE cartitem SET
+		productId = #{cartitem.productId},
+		cartId = #{cartitem.cartId},
+		quantity = #{cartitem.quantity},
+		totalPrice = #{cartitem.totalPrice}
+		WHERE id = #{id}
+	</update>
+
+    <!-- 카트id에 해당하는 데이터 모두 삭제 -->
+    <delete id="deleteCartItemByCartId">
+		DELETE FROM cartitem
+		WHERE cartId = #{cartId}
+	</delete>
+
+    <!-- 상품id에 해당하는 데이터 삭제 -->
+    <delete id="deleteCartItemByProductId">
+		DELETE FROM cartitem
+		WHERE productId = #{productId}
+		AND cartId = #{cartId}
+	</delete>
+</mapper>
