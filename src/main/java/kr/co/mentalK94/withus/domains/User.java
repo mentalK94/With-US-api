@@ -22,8 +22,6 @@ public class User {
 
     private String address; // user address
 
-    private Long cartId; // user가 보유한 cartId
-
     private int point; // user point
 
     private int auth; // user auth (admin : 0 / common user : 1)

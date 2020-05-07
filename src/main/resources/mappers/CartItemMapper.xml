@@ -4,14 +4,14 @@
 
     <!-- 데이터 삽입 -->
     <insert id = "insertCartItem" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.CartItem">
-		INSERT INTO cartitem(productId, cartId, quantity, totalPrice)
-					VALUES(#{productId}, #{cartId}, #{quantity}, #{totalPrice})
+		INSERT INTO cartitem(productId, userId, quantity, totalPrice)
+					VALUES(#{productId}, #{userId}, #{quantity}, #{totalPrice})
 	</insert>
 
-    <!--데이터 조회 -->
-    <select id="selectCartItemByCartId" resultType="kr.co.mentalK94.withus.domains.CartItem">
+    <!-- 사용자 장바구니 데이터 조회 -->
+    <select id="selectCartItemByUserId" resultType="kr.co.mentalK94.withus.domains.CartItem">
 		SELECT * FROM cartitem
-		WHERE cartId = #{cartId}
+		WHERE userId = #{userId}
 	</select>
 
     <!--데이터 수정 -->
@@ -24,15 +24,15 @@
 	</update>
 
     <!-- 카트id에 해당하는 데이터 모두 삭제 -->
-    <delete id="deleteCartItemByCartId">
+    <delete id="deleteCartItemByUserId">
 		DELETE FROM cartitem
-		WHERE cartId = #{cartId}
+		WHERE userId = #{userId}
 	</delete>
 
     <!-- 상품id에 해당하는 데이터 삭제 -->
-    <delete id="deleteCartItemByProductId">
+    <delete id="deleteCartItemByProductIdAndUserId">
 		DELETE FROM cartitem
 		WHERE productId = #{productId}
-		AND cartId = #{cartId}
+		AND userId = #{userId}
 	</delete>
 </mapper>

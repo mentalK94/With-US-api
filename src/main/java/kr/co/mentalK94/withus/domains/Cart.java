@@ -12,8 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 public class Cart implements Serializable {
 
-    private Long id; // Cart id
-
     private List<CartItem> cartItems; // CartItem List
 
     private int grandTotalPrice; // 총 가격
