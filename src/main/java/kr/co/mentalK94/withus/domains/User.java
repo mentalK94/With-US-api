@@ -22,7 +22,7 @@ public class User {
 
     private String address; // user address
 
-    private Cart cart; // user가 보유한 cart
+    private Long cartId; // user가 보유한 cartId
 
     private int point; // user point
 

@@ -15,7 +15,7 @@ public interface CartItemMapper {
 
     void insertCartItem(CartItem cartItem); // cartItem 추가
 
-    void updateCartItem(@Param("cartItem") CartItem cartItem, @Param("id")Long id); // cartItem 수정
+    void updateCartItem(CartItem cartItem); // cartItem 수정
 
     int deleteCartItemByCartId(Long cartId); // 해당 cartItems 모두 삭제
 

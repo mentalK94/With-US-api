@@ -3,7 +3,7 @@
 <mapper namespace="kr.co.mentalK94.withus.mappers.CartMapper">
 
     <!-- 데이터 삽입 -->
-    <insert id = "insertCartItem" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.Cart">
+    <insert id = "insertCart" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.Cart">
 		INSERT INTO cart(grandTotalPrice)
 					VALUES(#{grandTotalPrice})
 	</insert>

@@ -31,4 +31,11 @@
 		SELECT * FROM user
 	</select>
 
+	<!--데이터 수정 (장바구니 추가) -->
+	<update id="updateCartByUserId" parameterType="kr.co.mentalK94.withus.domains.User">
+		UPDATE user SET
+		cartId = #{cartId}
+		WHERE id = #{id}
+	</update>
+
 </mapper>

@@ -13,7 +13,7 @@ public class CartItem implements Serializable {
 
     private Long id; // CartItem id
 
-    private Product product; // 상품
+    private Long productId; // 상품 id
 
     private Long cartId; // cart Id
 

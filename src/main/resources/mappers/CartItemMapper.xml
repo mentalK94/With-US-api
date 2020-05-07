@@ -15,13 +15,12 @@
 	</select>
 
     <!--데이터 수정 -->
-    <update id="updateCartItem" parameterType="map">
+    <update id="updateCartItem" parameterType="kr.co.mentalK94.withus.domains.CartItem">
 		UPDATE cartitem SET
-		productId = #{cartitem.productId},
-		cartId = #{cartitem.cartId},
-		quantity = #{cartitem.quantity},
-		totalPrice = #{cartitem.totalPrice}
+		quantity = #{quantity},
+		totalPrice = #{totalPrice}
 		WHERE id = #{id}
+		AND productId = #{productId}
 	</update>
 
     <!-- 카트id에 해당하는 데이터 모두 삭제 -->

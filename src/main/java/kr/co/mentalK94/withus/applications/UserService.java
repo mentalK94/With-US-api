@@ -55,4 +55,8 @@ public class UserService {
     public User getMyUser(Long userId) {
         return userMapper.selectByUserId(userId);
     }
+
+    public void updateCartMyUser(User user) {
+        userMapper.updateCartByUserId(user);
+    }
 }

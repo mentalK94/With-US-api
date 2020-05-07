@@ -13,4 +13,6 @@ public interface UserMapper {
     User selectByUserEmail(String email);
 
     User selectByUserId(Long userId);
+
+    void updateCartByUserId(User user);
 }
