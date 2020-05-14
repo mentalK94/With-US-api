@@ -31,7 +31,7 @@ public class CartController {
 
     Logger logger = LoggerFactory.getLogger(CartController.class);
 
-    @GetMapping("/cart")
+    @PostMapping("/cart")
     public ResponseEntity<?> getCart(Authentication authentication) throws Exception {
 
         Claims claims = (Claims) authentication.getPrincipal();
@@ -42,6 +42,11 @@ public class CartController {
 
         if(cartItems == null) { // 사용자의 장바구니가 존재하지 않는 경우
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // response 204
+        }
+
+        for(int i=0; i<cartItems.size(); i++) { // 사용자가 장바구니에 추가한 상품들의 총 가격
+            Product product = productService.getProduct(cartItems.get(i).getProductId());
+            cartItems.get(i).setProduct(product);
         }
 
         int grandTotalPrice = 0;
