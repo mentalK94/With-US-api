@@ -35,10 +35,10 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
                                     FilterChain chain)
             throws ServletException, IOException {
 
-        logger.info("request: " + request);
+        // logger.info("request: " + request);
         Authentication authentication = getAuthentication(request);
 
-        logger.info("authentication: " + authentication);
+        // logger.info("authentication: " + authentication);
         if(authentication != null){
             SecurityContext context = SecurityContextHolder.getContext();
             context.setAuthentication(authentication);
