@@ -38,6 +38,7 @@ public class PurchaseController {
                 .shippingAddress(resource.getShippingAddress())
                 .shippingMemo(resource.getShippingMemo())
                 .purchaseItems(resource.getPurchaseItems())
+                .phone(resource.getPhone())
                 .userId(userId)
                 .build();
 
