@@ -9,7 +9,7 @@
 	</insert>
 
 	<!-- 데이터 삽입 -->
-	<insert id = "insertPurchaseItem" useGeneratedKeys="true" keyProperty="id" parameterType="map">
+	<insert id = "insertPurchaseItem" parameterType="map">
 		INSERT INTO purchaseitem(productId, quantity, purchaseId)
 					VALUES(#{item.productId}, #{item.quantity}, #{purchaseId})
 	</insert>
