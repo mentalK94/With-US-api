@@ -10,6 +10,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @Builder
 public class Purchase {
+
     private Long id; // Purchase id
 
     private Long userId; // 구매자 id

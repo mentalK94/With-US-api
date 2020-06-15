@@ -58,7 +58,7 @@ public class LoginController {
     @PostMapping("/loginUser")
     public User loginUser(Authentication authentication) {
 
-        logger.info("auth : " + authentication);
+//        logger.info("auth : " + authentication);
         Claims claims = (Claims) authentication.getPrincipal();
 
         Long userId = claims.get("userId", Long.class);
@@ -70,7 +70,7 @@ public class LoginController {
                 .zonecode(user.getZonecode()).detailAddress(user.getDetailAddress())
                 .build();
 
-        logger.info("loginUser : " + loginUser.getName());
+//        logger.info("loginUser : " + loginUser.getName());
         return loginUser;
     }
 }
