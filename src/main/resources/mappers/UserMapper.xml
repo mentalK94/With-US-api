@@ -4,8 +4,8 @@
 
     <!-- 데이터 삽입 -->
     <insert id = "insertUser" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.User">
-		INSERT INTO user(email, password, name, phone, address)
-					VALUES(#{email}, #{password}, #{name}, #{phone}, #{address})
+		INSERT INTO user(email, password, name, phone, address, detailAddress, zonecode)
+					VALUES(#{email}, #{password}, #{name}, #{phone}, #{address}, #{detailAddress}, #{zonecode})
 	</insert>
 
     <!--데이터 조회 -->
