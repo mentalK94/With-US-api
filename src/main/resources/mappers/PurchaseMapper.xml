@@ -9,9 +9,9 @@
 	</insert>
 
 	<!-- 데이터 삽입 -->
-	<insert id = "insertPurchaseItem" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.PurchaseItem">
+	<insert id = "insertPurchaseItem" useGeneratedKeys="true" keyProperty="id" parameterType="map">
 		INSERT INTO purchaseitem(productId, quantity, purchaseId)
-					VALUES(#{productId}, #{quantity}, #{purchaseId})
+					VALUES(#{item.productId}, #{item.quantity}, #{purchaseId})
 	</insert>
 
 </mapper>

@@ -38,7 +38,7 @@ public class PurchaseServiceTest {
 
         purchaseService.addPurchase(purchase);
 
-        verify(purchaseMapper).insertUser(any());
+        verify(purchaseMapper).insertPurchase(any());
     }
 
 }

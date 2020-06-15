@@ -6,6 +6,8 @@ import kr.co.mentalK94.withus.mappers.PurchaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PurchaseService {
 
@@ -17,14 +19,15 @@ public class PurchaseService {
     }
 
     public void addPurchase(Purchase purchase) {
-        // TODO: addPurchase 구현
-
-        // 구매상품 목록 저장
-        for(PurchaseItem purchaseItem : purchase.getPurchaseItems()) {
-            purchaseMapper.insertPurchaseItem(purchaseItem);
-        }
-
         // 구매내용 저장
         purchaseMapper.insertPurchase(purchase);
+    }
+
+    public void addPurchaseItem(List<PurchaseItem> purchaseItems, Long purchaseId) {
+        // 구매상품 목록 저장
+        for(PurchaseItem purchaseItem : purchaseItems) {
+            purchaseMapper.insertPurchaseItem(purchaseItem, purchaseId);
+        }
+
     }
 }
