@@ -20,7 +20,11 @@ public class User {
 
     private String phone; // user phone
 
-    private String address; // user address
+    private String address; // user 주소
+
+    private String zonecode; // user 우편번호
+
+    private String detailAddress; // user 상세주소
 
     private int point; // user point
 

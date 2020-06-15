@@ -28,6 +28,8 @@ public class UserController {
                         .name(resource.getName())
                         .phone(resource.getPhone())
                         .address(resource.getAddress())
+                        .zonecode(resource.getZonecode())
+                        .detailAddress(resource.getDetailAddress())
                         .build();
 
         userService.addUser(user);

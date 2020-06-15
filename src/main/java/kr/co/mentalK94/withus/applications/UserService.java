@@ -26,11 +26,11 @@ public class UserService {
 
     public void addUser(User user) {
 
-        logger.info(user.getPassword());
+        // logger.info(user.getPassword());
 
         // 패스워드 해싱
         String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
-        logger.info(encodedPassword);
+        // logger.info(encodedPassword);
         user.setPassword(encodedPassword);
 
         userMapper.insertUser(user);

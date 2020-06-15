@@ -67,6 +67,7 @@ public class LoginController {
         User loginUser = User.builder().address(user.getAddress())
                 .email(user.getEmail()).name(user.getName())
                 .phone(user.getPhone()).point(user.getPoint())
+                .zonecode(user.getZonecode()).detailAddress(user.getDetailAddress())
                 .build();
 
         logger.info("loginUser : " + loginUser.getName());
