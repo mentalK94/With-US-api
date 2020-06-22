@@ -2,6 +2,7 @@ package kr.co.mentalK94.withus.domains;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 @Getter
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Purchase {
+public class Purchase implements Serializable {
 
     private Long id; // Purchase id
 

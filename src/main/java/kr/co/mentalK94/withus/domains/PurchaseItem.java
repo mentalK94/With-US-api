@@ -2,12 +2,14 @@ package kr.co.mentalK94.withus.domains;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PurchaseItem {
+public class PurchaseItem implements Serializable {
 
     private Long id; // purchaseItem id
 
