@@ -64,7 +64,7 @@ public class LoginController {
         Long userId = claims.get("userId", Long.class);
 
         User user = userService.getMyUser(userId);
-        User loginUser = User.builder().address(user.getAddress())
+        User loginUser = User.builder().id(user.getId()).address(user.getAddress())
                 .email(user.getEmail()).name(user.getName())
                 .phone(user.getPhone()).point(user.getPoint())
                 .zonecode(user.getZonecode()).detailAddress(user.getDetailAddress())

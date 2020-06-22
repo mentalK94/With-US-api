@@ -25,12 +25,8 @@ public class PurchaseController {
     private PurchaseService purchaseService;
 
     @PostMapping("/purchase")
-    public ResponseEntity<?> create(@RequestBody Purchase resource, Authentication authentication)
+    public ResponseEntity<?> create(@RequestBody Purchase resource)
             throws URISyntaxException {
-
-        Claims claims = (Claims) authentication.getPrincipal();
-
-        Long userId = claims.get("userId", Long.class);
 
         Purchase purchase = Purchase.builder().payAmount(resource.getPayAmount())
                 .totalPrice(resource.getTotalPrice())
@@ -39,7 +35,7 @@ public class PurchaseController {
                 .shippingMemo(resource.getShippingMemo())
                 .purchaseItems(resource.getPurchaseItems())
                 .phone(resource.getPhone())
-                .userId(userId)
+                .userId(resource.getUserId())
                 .build();
 
         purchaseService.addPurchase(purchase);
