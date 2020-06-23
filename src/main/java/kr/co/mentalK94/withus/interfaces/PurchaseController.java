@@ -33,8 +33,12 @@ public class PurchaseController {
     private CartItemService cartItemService;
 
     @PostMapping("/purchase")
-    public ResponseEntity<?> create(@RequestBody Purchase resource)
+    public ResponseEntity<?> create(Authentication authentication, @RequestBody Purchase resource)
             throws URISyntaxException {
+
+        Claims claims = (Claims) authentication.getPrincipal();
+
+        Long userId = claims.get("userId", Long.class);
 
         Purchase purchase = Purchase.builder().payAmount(resource.getPayAmount())
                 .totalPrice(resource.getTotalPrice())
@@ -43,7 +47,7 @@ public class PurchaseController {
                 .shippingMemo(resource.getShippingMemo())
                 .purchaseItems(resource.getPurchaseItems())
                 .phone(resource.getPhone())
-                .userId(resource.getUserId())
+                .userId(userId)
                 .build();
 
         // 구매 정보 추가
@@ -59,6 +63,8 @@ public class PurchaseController {
         cartItemService.removeAllCartItems(purchase.getUserId());
 
         URI location = new URI("/purchase/"+purchase.getId());
-        return ResponseEntity.created(location).body(1);
+        return ResponseEntity.created(location).body(purchase.getId());
     }
+
+
 }
