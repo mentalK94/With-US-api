@@ -52,6 +52,20 @@ public class UserService {
         return user;
     }
 
+    public void updateUsingPoint(Long userId, int usingPoint) {
+
+        // logger.info("selectPointByUserId(userId) : " + userMapper.selectPointByUserId(userId));
+
+        // 유저 포인트 조회
+        int point = userMapper.selectPointByUserId(userId);
+
+        // point 갱신
+        point -= usingPoint;
+
+        // 갱신된 포인트 저장
+        userMapper.updatePointByUserId(userId, point);
+    }
+
     public User getMyUser(Long userId) {
         return userMapper.selectByUserId(userId);
     }

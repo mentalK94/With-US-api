@@ -29,7 +29,6 @@ public class PurchaseService {
     public void addPurchase(Purchase purchase) {
         // 구매내용 저장
         purchaseMapper.insertPurchase(purchase);
-        updateUsingPoint(purchase.getUserId(), purchase.getUsingPoint());
     }
 
     public void addPurchaseItem(List<PurchaseItem> purchaseItems, Long purchaseId) {
@@ -37,20 +36,5 @@ public class PurchaseService {
         for(PurchaseItem purchaseItem : purchaseItems) {
             purchaseMapper.insertPurchaseItem(purchaseItem, purchaseId);
         }
-    }
-
-    public void updateUsingPoint(Long userId, int usingPoint) {
-
-        // logger.info("selectPointByUserId(userId) : " + userMapper.selectPointByUserId(userId));
-
-        // 유저 포인트 조회
-        int point = userMapper.selectPointByUserId(userId);
-
-        // point 갱신
-        point -= usingPoint;
-
-        // 갱신된 포인트 저장
-        userMapper.updatePointByUserId(userId, point);
-
     }
 }

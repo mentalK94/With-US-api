@@ -1,7 +1,9 @@
 package kr.co.mentalK94.withus.interfaces;
 
 import io.jsonwebtoken.Claims;
+import kr.co.mentalK94.withus.applications.CartItemService;
 import kr.co.mentalK94.withus.applications.PurchaseService;
+import kr.co.mentalK94.withus.applications.UserService;
 import kr.co.mentalK94.withus.domains.Product;
 import kr.co.mentalK94.withus.domains.Purchase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,12 @@ public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CartItemService cartItemService;
+
     @PostMapping("/purchase")
     public ResponseEntity<?> create(@RequestBody Purchase resource)
             throws URISyntaxException {
@@ -38,9 +46,17 @@ public class PurchaseController {
                 .userId(resource.getUserId())
                 .build();
 
+        // 구매 정보 추가
         purchaseService.addPurchase(purchase);
 
+        // 구매 상품목록 추가
         purchaseService.addPurchaseItem(purchase.getPurchaseItems(), purchase.getId());
+
+        // user 포인트 갱신
+        userService.updateUsingPoint(purchase.getUserId(), purchase.getUsingPoint());
+
+        // user 장바구니 목록 삭제
+        cartItemService.removeAllCartItems(purchase.getUserId());
 
         URI location = new URI("/purchase/"+purchase.getId());
         return ResponseEntity.created(location).body(1);
