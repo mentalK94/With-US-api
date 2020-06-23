@@ -13,4 +13,6 @@ public interface PurchaseMapper {
     void insertPurchase(Purchase purchase);
 
     void insertPurchaseItem(@Param("item")PurchaseItem purchaseItem, @Param("purchaseId")Long purchaseId);
+
+    Purchase selectByPurchaseId(@Param("purchaseId")Long purchaseId, @Param("userId")Long userId);
 }

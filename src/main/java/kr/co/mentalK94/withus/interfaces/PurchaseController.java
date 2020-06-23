@@ -6,14 +6,15 @@ import kr.co.mentalK94.withus.applications.PurchaseService;
 import kr.co.mentalK94.withus.applications.UserService;
 import kr.co.mentalK94.withus.domains.Product;
 import kr.co.mentalK94.withus.domains.Purchase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
@@ -22,6 +23,8 @@ import java.util.List;
 
 @RestController
 public class PurchaseController {
+
+    Logger logger = LoggerFactory.getLogger(PurchaseController.class);
 
     @Autowired
     private PurchaseService purchaseService;
@@ -66,5 +69,22 @@ public class PurchaseController {
         return ResponseEntity.created(location).body(purchase.getId());
     }
 
+    @GetMapping("/purchase/{purchaseId}")
+    public ResponseEntity<?> purchaseInfo(@PathVariable("purchaseId") Long purchaseId, Authentication authentication) {
+
+        Claims claims = (Claims) authentication.getPrincipal();
+
+        Long userId = claims.get("userId", Long.class);
+
+        Purchase purchase = purchaseService.getPurchaseInfo(purchaseId, userId);
+
+        logger.info("purchase : " + purchase);
+
+        if(purchase == null) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(purchase);
+    }
 
 }

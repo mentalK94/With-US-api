@@ -14,4 +14,11 @@
 					VALUES(#{item.productId}, #{item.quantity}, #{purchaseId})
 	</insert>
 
+	<!--데이터 상세조회(구매완료 후 정보확인) -->
+	<select id="selectByPurchaseId" parameterType="map" resultType="kr.co.mentalK94.withus.domains.Purchase">
+		SELECT * FROM purchase
+		WHERE id = #{purchaseId}
+		AND userId = #{userId}
+	</select>
+
 </mapper>

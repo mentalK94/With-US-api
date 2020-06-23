@@ -37,4 +37,8 @@ public class PurchaseService {
             purchaseMapper.insertPurchaseItem(purchaseItem, purchaseId);
         }
     }
+
+    public Purchase getPurchaseInfo(Long purchaseId, Long userId) {
+        return purchaseMapper.selectByPurchaseId(purchaseId, userId);
+    }
 }
