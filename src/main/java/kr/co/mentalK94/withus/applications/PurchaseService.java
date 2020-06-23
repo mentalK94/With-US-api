@@ -41,21 +41,16 @@ public class PurchaseService {
 
     public void updateUsingPoint(Long userId, int usingPoint) {
 
-        logger.info("selectPointByUserId(userId) : " + userMapper.selectPointByUserId(userId));
+        // logger.info("selectPointByUserId(userId) : " + userMapper.selectPointByUserId(userId));
 
         // 유저 포인트 조회
-        if(userMapper.selectPointByUserId(userId) != null) {
-            int point = userMapper.selectPointByUserId(userId);
+        int point = userMapper.selectPointByUserId(userId);
 
-            // point 갱신
-            point -= usingPoint;
+        // point 갱신
+        point -= usingPoint;
 
-            // 갱신된 포인트 저장
-            userMapper.updatePointByUserId(userId, point);
-            logger.info("success");
-        } else {
-            logger.info("fail");
-            return;
-        }
+        // 갱신된 포인트 저장
+        userMapper.updatePointByUserId(userId, point);
+
     }
 }

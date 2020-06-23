@@ -15,7 +15,7 @@ public interface UserMapper {
 
     User selectByUserId(Long userId);
 
-    Integer selectPointByUserId(Long userId);
+    int selectPointByUserId(Long userId);
 
     void updateCartByUserId(User user);
 
