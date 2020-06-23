@@ -2,6 +2,7 @@ package kr.co.mentalK94.withus.mappers;
 
 import kr.co.mentalK94.withus.domains.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Mapper
@@ -14,5 +15,9 @@ public interface UserMapper {
 
     User selectByUserId(Long userId);
 
+    Integer selectPointByUserId(Long userId);
+
     void updateCartByUserId(User user);
+
+    void updatePointByUserId(@Param("userId")Long userId, @Param("point")int point);
 }

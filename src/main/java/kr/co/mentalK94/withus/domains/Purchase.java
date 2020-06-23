@@ -30,5 +30,9 @@ public class Purchase implements Serializable {
 
     private String dateTime; // 구매일자
 
+    private String cancelDateTime; // 구매 취소일자
+
+    private int isComplete; // 구매 완료여부
+
     private ArrayList<PurchaseItem> purchaseItems; // 구매한 상품목록
 }
