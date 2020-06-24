@@ -87,4 +87,16 @@ public class PurchaseController {
         return ResponseEntity.ok(purchase);
     }
 
+    @GetMapping("/purchase/history")
+    public ResponseEntity<?> purchaseHistory(Authentication authentication) throws Exception {
+
+        Claims claims = (Claims) authentication.getPrincipal();
+
+        Long userId = claims.get("userId", Long.class);
+
+        List<Purchase> purchaseList = purchaseService.getPurchaseList(userId);
+
+        return ResponseEntity.ok(purchaseList);
+    }
+
 }

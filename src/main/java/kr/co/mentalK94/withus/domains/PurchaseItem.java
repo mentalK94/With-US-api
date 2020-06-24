@@ -18,4 +18,6 @@ public class PurchaseItem implements Serializable {
     private Long purchaseId; // 구매 id
 
     private int quantity; // 구매수량
+
+    private Product product; // 구매 상품정보
 }

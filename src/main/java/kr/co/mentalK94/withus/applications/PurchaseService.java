@@ -1,7 +1,9 @@
 package kr.co.mentalK94.withus.applications;
 
+import kr.co.mentalK94.withus.domains.Product;
 import kr.co.mentalK94.withus.domains.Purchase;
 import kr.co.mentalK94.withus.domains.PurchaseItem;
+import kr.co.mentalK94.withus.mappers.ProductMapper;
 import kr.co.mentalK94.withus.mappers.PurchaseMapper;
 import kr.co.mentalK94.withus.mappers.UserMapper;
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,14 +19,14 @@ public class PurchaseService {
 
     private PurchaseMapper purchaseMapper;
 
-    private UserMapper userMapper;
+    private ProductMapper productMapper;
 
     private Logger logger = LoggerFactory.getLogger(PurchaseService.class);
 
     @Autowired
-    public PurchaseService(PurchaseMapper purchaseMapper, UserMapper userMapper) {
-        this.userMapper = userMapper;
+    public PurchaseService(PurchaseMapper purchaseMapper, ProductMapper productMapper) {
         this.purchaseMapper = purchaseMapper;
+        this.productMapper = productMapper;
     }
 
     public void addPurchase(Purchase purchase) {
@@ -40,5 +43,28 @@ public class PurchaseService {
 
     public Purchase getPurchaseInfo(Long purchaseId, Long userId) {
         return purchaseMapper.selectByPurchaseId(purchaseId, userId);
+    }
+
+    public List<Purchase> getPurchaseList(Long userId) throws Exception {
+        List<Purchase> purchaseList = purchaseMapper.selectByUserId(userId);
+
+        // 구매내역이 존재하는 경우
+        for(Purchase p : purchaseList) {
+            ArrayList<PurchaseItem> purchaseItemList = (ArrayList<PurchaseItem>) getPurchaseItemList(p.getId());
+
+            for(PurchaseItem purchaseItem : purchaseItemList) {
+                Product product = productMapper.selectProduct(purchaseItem.getProductId());
+                purchaseItem.setProduct(product);
+            }
+
+            p.setPurchaseItems(purchaseItemList);
+        }
+
+        return purchaseList;
+
+    }
+
+    public List<PurchaseItem> getPurchaseItemList(Long purchaseId) {
+        return purchaseMapper.selectItemByPurchaseId(purchaseId);
     }
 }

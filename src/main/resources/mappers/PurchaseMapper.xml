@@ -21,4 +21,16 @@
 		AND userId = #{userId}
 	</select>
 
+	<!--데이터 조회(구매내역 조회) -->
+	<select id="selectByUserId" resultType="kr.co.mentalK94.withus.domains.Purchase">
+		SELECT * FROM purchase
+		WHERE userId = #{userId}
+	</select>
+
+	<!--데이터 조회(구매내역 아이템 조회) -->
+	<select id="selectItemByPurchaseId" resultType="kr.co.mentalK94.withus.domains.PurchaseItem">
+		SELECT * FROM purchaseitem
+		WHERE purchaseId = #{purchaseId}
+	</select>
+
 </mapper>
