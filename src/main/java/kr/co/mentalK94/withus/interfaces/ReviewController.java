@@ -8,13 +8,11 @@ import kr.co.mentalK94.withus.domains.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 public class ReviewController {
@@ -22,6 +20,10 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
+    @GetMapping("/products/{productId}/reviews")
+    public List<Review> list(@PathVariable("productId") Long productId) { // 상품에 맞는 리뷰 리스트 가져오기
+        return reviewService.getReviewListByProductId(productId);
+    }
 
     @PostMapping("/products/{productId}/reviews")
     public ResponseEntity<?> create(Authentication authentication,
