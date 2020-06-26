@@ -15,7 +15,7 @@ public class Review {
 
     private String writer; // 작성자
 
-    private float rating; // 평점
+    private double rating; // 평점
 
     private String description; // 리뷰 내용
 
