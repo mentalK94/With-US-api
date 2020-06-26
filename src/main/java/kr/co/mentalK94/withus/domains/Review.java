@@ -13,6 +13,8 @@ public class Review {
 
     private Long productId; // product id
 
+    private Long userId; // user id
+
     private String writer; // 작성자
 
     private double rating; // 평점

@@ -6,6 +6,7 @@ import kr.co.mentalK94.withus.applications.UserService;
 import kr.co.mentalK94.withus.domains.Review;
 import kr.co.mentalK94.withus.domains.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,10 @@ public class ReviewController {
 
         String name = claims.get("name", String.class);
 
+        Long userId = claims.get("userId", Long.class);
+
         Review review = Review.builder().productId(productId)
+                                        .userId(userId)
                                         .rating(resource.getRating())
                                         .description(resource.getDescription())
                                         .writer(name)
@@ -45,5 +49,13 @@ public class ReviewController {
 
         URI location = new URI("/products/" + productId + "/reviews/" + review.getId());
         return ResponseEntity.created(location).body(review.getId());
+    }
+
+    @DeleteMapping("/products/{productId}/reviews/{id}")
+    public ResponseEntity<?> remove(Authentication authentication,
+                                    @PathVariable("productId") Long productId,
+                                    @PathVariable("id") Long reviewId) {
+
+        return new ResponseEntity<>(reviewId, HttpStatus.OK);
     }
 }
