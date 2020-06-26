@@ -13,4 +13,11 @@
 		SELECT * FROM review
 		WHERE productId = #{productId}
 	</select>
+
+	<!-- 데이터 삭제(리뷰 삭제) -->
+	<delete id="deleteReview">
+		DELETE FROM review
+		WHERE id = #{reviewId}
+		AND userId = #{userId}
+	</delete>
 </mapper>

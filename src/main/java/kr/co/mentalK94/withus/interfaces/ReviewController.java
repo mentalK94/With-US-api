@@ -51,10 +51,18 @@ public class ReviewController {
         return ResponseEntity.created(location).body(review.getId());
     }
 
-    @DeleteMapping("/products/{productId}/reviews/{id}")
+    @DeleteMapping("/products/reviews/{id}")
     public ResponseEntity<?> remove(Authentication authentication,
-                                    @PathVariable("productId") Long productId,
                                     @PathVariable("id") Long reviewId) {
+
+        Claims claims = (Claims) authentication.getPrincipal();
+        Long userId = claims.get("userId", Long.class);
+
+        boolean isRemove = reviewService.deleteReview(userId, reviewId);
+
+        if(!isRemove) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<>(reviewId, HttpStatus.OK);
     }
