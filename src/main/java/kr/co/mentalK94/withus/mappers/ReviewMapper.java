@@ -16,4 +16,6 @@ public interface ReviewMapper {
     List<Review> selectReviewByProductId(Long productId);
 
     int deleteReview(@Param("userId")Long userId, @Param("reviewId")Long reviewId);
+
+    int countReviewByProductId(Long productId);
 }
