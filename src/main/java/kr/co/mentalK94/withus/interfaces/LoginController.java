@@ -37,13 +37,7 @@ public class LoginController {
         String email = resource.getEmail();
         String password = resource.getPassword();
 
-        logger.info(email);
-        logger.info(password);
-
         User user = userService.authenticate(email, password);
-
-        logger.info("user id : " + user.getId());
-        logger.info(user.getName());
 
         String accessToken = jwtUtil.crateToken(user.getId(), user.getName());
 
@@ -58,7 +52,7 @@ public class LoginController {
     @PostMapping("/loginUser")
     public User loginUser(Authentication authentication) {
 
-//        logger.info("auth : " + authentication);
+        logger.info("auth : " + authentication);
         Claims claims = (Claims) authentication.getPrincipal();
 
         Long userId = claims.get("userId", Long.class);
