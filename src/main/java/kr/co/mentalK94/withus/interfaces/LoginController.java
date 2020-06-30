@@ -51,8 +51,7 @@ public class LoginController {
 
     @PostMapping("/loginUser")
     public User loginUser(Authentication authentication) {
-
-        logger.info("auth : " + authentication);
+        
         Claims claims = (Claims) authentication.getPrincipal();
 
         Long userId = claims.get("userId", Long.class);
