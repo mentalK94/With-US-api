@@ -1,7 +1,6 @@
 package kr.co.mentalK94.withus.utils;
 
 import kr.co.mentalK94.withus.domains.Purchase;
-import kr.co.mentalK94.withus.domains.PurchaseItem;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -58,6 +57,9 @@ public class ExcelGeneratorUtil {
                 row.createCell(8).setCellValue(purchase.getPhone());
                 row.createCell(9).setCellValue(purchase.getDateTime());
             }
+
+            workbook.write(outputStream);
+            return new ByteArrayInputStream(outputStream.toByteArray());
         }
     }
 }
