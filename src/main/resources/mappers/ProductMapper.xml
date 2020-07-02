@@ -25,6 +25,12 @@
 		SELECT * FROM product
 	</select>
 
+	<!--데이터 조회(카테고리 별 조회) -->
+	<select id="selectProductByCategory" resultType="kr.co.mentalK94.withus.domains.Product">
+		SELECT * FROM product
+		WHERE category = #{category}
+	</select>
+
 	<!--데이터 수정 -->
 	<update id="updateProduct" parameterType="map">
 		UPDATE product SET

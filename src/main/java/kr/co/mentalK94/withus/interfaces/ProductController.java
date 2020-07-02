@@ -31,6 +31,11 @@ public class ProductController {
         return productService.getProductList();
     }
 
+    @GetMapping("/products/{category}")
+    public List<Product> listByCategory(@PathVariable("category") String category) throws Exception {
+        return productService.getProductListByCategory(category);
+    }
+
     @GetMapping("/products/{id}")
     public Product detail(@PathVariable("id") Long id) throws Exception {
         return productService.getProduct(id);

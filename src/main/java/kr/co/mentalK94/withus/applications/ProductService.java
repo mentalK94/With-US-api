@@ -36,4 +36,8 @@ public class ProductService {
     public int deleteProduct(Long id) {
         return productMapper.deleteProduct(id);
     }
+
+    public List<Product> getProductListByCategory(String category) throws Exception {
+        return productMapper.selectProductByCategory(category);
+    }
 }
