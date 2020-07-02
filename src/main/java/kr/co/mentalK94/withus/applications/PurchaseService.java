@@ -37,6 +37,12 @@ public class PurchaseService {
     public void addPurchaseItem(List<PurchaseItem> purchaseItems, Long purchaseId) {
         // 구매상품 목록 저장
         for(PurchaseItem purchaseItem : purchaseItems) {
+
+            int stock = productMapper.selectProductStock(purchaseItem.getProductId());
+            // 구매한 상품 재고 갱신
+            productMapper.updateProductStock(purchaseItem.getProductId(),
+                    stock-purchaseItem.getQuantity());
+
             purchaseMapper.insertPurchaseItem(purchaseItem, purchaseId);
         }
     }
