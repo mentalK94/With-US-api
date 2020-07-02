@@ -77,7 +77,6 @@ public class ProductController {
                 .manufacturer(resource.getManufacturer())
                 .stock(resource.getStock())
                 .description(resource.getDescription())
-                .rating(resource.getRating())
                 .limitedQuantity(resource.getLimitedQuantity())
                 .build();
 
