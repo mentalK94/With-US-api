@@ -33,6 +33,14 @@
 		WHERE id = #{id}
 	</update>
 
+	<!--데이터 수정(평점 및 리뷰 수 수정) -->
+	<update id="updateProductReview" parameterType="map">
+		UPDATE product SET
+		reviewCount = #{reviewCount},
+		rating = #{rating}
+		WHERE id = #{id}
+	</update>
+
 	<!-- 이미지 업로드 -->
 	<update id="imageUpdate">
 		UPDATE product SET

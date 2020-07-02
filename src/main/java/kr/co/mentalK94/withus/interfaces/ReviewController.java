@@ -30,7 +30,7 @@ public class ReviewController {
     public ResponseEntity<?> create(Authentication authentication,
                                     @PathVariable("productId") Long productId,
                                     @RequestBody Review resource)
-            throws URISyntaxException {
+            throws Exception {
 
         Claims claims = (Claims) authentication.getPrincipal();
 
