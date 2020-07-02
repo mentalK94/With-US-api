@@ -31,9 +31,9 @@ public class ProductController {
         return productService.getProductList();
     }
 
-    @GetMapping("/products/{category}")
-    public List<Product> listByCategory(@PathVariable("category") String category) throws Exception {
-        return productService.getProductListByCategory(category);
+    @GetMapping("/products/categories/{categoryId}")
+    public List<Product> listByCategory(@PathVariable("categoryId") Long categoryId) throws Exception {
+        return productService.getProductListByCategoryId(categoryId);
     }
 
     @GetMapping("/products/{id}")
@@ -57,7 +57,7 @@ public class ProductController {
         }
 
         Product product = Product.builder().name(resource.getName())
-                                           .category(resource.getCategory())
+                                           .categoryId(resource.getCategoryId())
                                             .price(resource.getPrice())
                                             .manufacturer(resource.getManufacturer())
                                             .stock(resource.getStock())
@@ -77,7 +77,7 @@ public class ProductController {
     public String update(@PathVariable("id") Long id, @RequestBody Product resource) {
 
         Product product = Product.builder().name(resource.getName())
-                .category(resource.getCategory())
+                .categoryId(resource.getCategoryId())
                 .price(resource.getPrice())
                 .manufacturer(resource.getManufacturer())
                 .stock(resource.getStock())

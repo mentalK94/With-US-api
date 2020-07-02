@@ -19,7 +19,7 @@ public class Product implements Serializable {
 
     private String name; // 상품명
 
-    private String category; // 상품 카테고리
+    private Long categoryId; // 상품 카테고리
 
     private int price; // 상품 가격
 

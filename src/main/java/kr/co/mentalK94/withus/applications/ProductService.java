@@ -37,7 +37,7 @@ public class ProductService {
         return productMapper.deleteProduct(id);
     }
 
-    public List<Product> getProductListByCategory(String category) throws Exception {
-        return productMapper.selectProductByCategory(category);
+    public List<Product> getProductListByCategoryId(Long categoryId) throws Exception {
+        return productMapper.selectProductByCategoryId(categoryId);
     }
 }
