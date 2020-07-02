@@ -4,8 +4,8 @@
 
 	<!-- 데이터 삽입 -->
 	<insert id = "insertProduct" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.Product">
-		INSERT INTO product(name, category, price, manufacturer, stock, description, imageFileName)
-					VALUES(#{name}, #{category}, #{price}, #{manufacturer}, #{stock}, #{description}, #{imageFileName})
+		INSERT INTO product(name, category, price, manufacturer, stock, description, imageFileName, limitedQuantity)
+					VALUES(#{name}, #{category}, #{price}, #{manufacturer}, #{stock}, #{description}, #{imageFileName}, #{limitedQuantity})
 	</insert>
 
 	<!--데이터 조회 -->
@@ -28,6 +28,7 @@
 		manufacturer = #{product.manufacturer},
 		stock = #{product.stock},
 		description = #{product.description},
+		limitedQuantity = #{product.limitedQuantity},
 		imageFileName = #{imageFileName}
 		WHERE id = #{id}
 	</update>

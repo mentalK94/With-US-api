@@ -15,21 +15,27 @@ public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id; // 제품 id
+    private Long id; // 상품 id
 
-    private String name; // 제품명
+    private String name; // 상품명
 
-    private String category; // 제품 카테고리
+    private String category; // 상품 카테고리
 
-    private int price; // 제품 가격
+    private int price; // 상품 가격
 
-    private String manufacturer; // 제품 제조사
+    private String manufacturer; // 상품 제조사
 
-    private int stock; // 제품 재고
+    private int stock; // 상품 재고
 
-    private String description; // 제품 설명
+    private String description; // 상품 설명
 
-    private MultipartFile productImage; // 제품 이미지
+    private MultipartFile productImage; // 상품 이미지
 
-    private String imageFileName; // 제품 이미지 명
+    private String imageFileName; // 상품 이미지 명
+
+    private double rating; // 상품 평점
+
+    private int reviewCount; // 상품 평점 수
+
+    private int limitedQuantity; // 0개 : 제한없음 / 1개이상 : 제한
 }
