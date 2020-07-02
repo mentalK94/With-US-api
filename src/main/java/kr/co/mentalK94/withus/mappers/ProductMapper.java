@@ -15,9 +15,13 @@ public interface ProductMapper {
 
     Product selectProduct(Long id) throws Exception;
 
+    int selectProductStock(Long id);
+
     void insertProduct(Product product);
 
     void updateProduct(@Param("product") Product product, @Param("id")Long id);
+
+    void updateProductStock(@Param("productId")Long id, @Param("stock")int stock);
 
     void imageUpdate(String imageFileName, @Param("id")Long id);
 
