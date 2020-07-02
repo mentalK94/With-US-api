@@ -30,7 +30,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.mybatis/mybatis
 	compile group: 'org.mybatis', name: 'mybatis', version: '3.4.6'
 	compile 'org.springframework.boot:spring-boot-starter-security'
-	compile('org.apache.poi:poi-ooxml:3.16') // .xlsx
+	compile group: 'org.apache.poi', name: 'poi', version: '3.11'
+	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.11'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'

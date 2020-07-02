@@ -29,7 +29,7 @@ public class ExcelController {
 
     Logger logger = LoggerFactory.getLogger(ExcelController.class);
 
-    @GetMapping("/downloadExcelFile/purchaseHistory.xls")
+    @GetMapping("/downloadExcelFile/purchaseHistory.xlsx")
     public ResponseEntity<InputStreamResource> excelPurchaseHistory(Authentication authentication) throws Exception {
         Claims claims = (Claims) authentication.getPrincipal();
 
@@ -41,7 +41,8 @@ public class ExcelController {
 
         ByteArrayInputStream inputStream = ExcelGeneratorUtil.purchaseHistoryToExcel(purchaseList, username);
 
-        logger.info("istream" + inputStream);
+        logger.info("i stream to : " + inputStream.toString());
+        logger.info("i stream read : " + inputStream.read());
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
