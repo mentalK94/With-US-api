@@ -28,5 +28,7 @@ public class User {
 
     private int point; // user point
 
-    private int auth; // user auth (admin : 0 / common user : 1)
+    private int auth; // user auth (비활성화 : 0 / common user : 1 / admin : 2)
+
+    private String authKey; // 인증 키
 }
