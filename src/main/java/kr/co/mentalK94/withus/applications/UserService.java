@@ -5,6 +5,7 @@ import kr.co.mentalK94.withus.mappers.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ public class UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     PasswordEncoder passwordEncoder;
 
@@ -26,14 +30,34 @@ public class UserService {
 
     public void addUser(User user) {
 
-        // logger.info(user.getPassword());
-
         // 패스워드 해싱
         String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
         // logger.info(encodedPassword);
         user.setPassword(encodedPassword);
 
         userMapper.insertUser(user);
+
+        // autoKey생성
+        String authKey = new TempKey().getKey(50, false);
+
+        // mail 작성 관련
+        MailUtils sendMail = new MailUtils(mailSender);
+
+        sendMail.setSubject("[With Us 위드어스] 회원가입 이메일 인증");
+        sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
+                .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
+                .append("<a href='http://localhost:9002/users/joinConfirm?uid=")
+                .append(user.getUid())
+                .append("&email=")
+                .append(user.getEmail())
+                .append("&authkey=")
+                .append(authKey)
+                .append("' target='_blenk'>이메일 인증 확인</a>")
+                .toString());
+        sendMail.setFrom("위드어스 ", "김한솔");
+        sendMail.setTo(user.getEmail());
+        sendMail.send();
+
     }
 
 
@@ -41,7 +65,7 @@ public class UserService {
     public User authenticate(String email, String password) {
         User user = userMapper.selectByUserEmail(email);
 
-        if(user == null) { // email존재�� �는 경우
+        if(user == null) { // email이 존재 하는 경우
             throw new AuthenticationWrongException();
         }
 
