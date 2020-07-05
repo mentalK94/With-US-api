@@ -47,9 +47,14 @@ public class UserController {
     public String confirm(@RequestParam("uid")Long userId, @RequestParam("email")String email,
                           @RequestParam("authKey")String authKey) {
         User user = userService.getMyUser(userId);
-        logger.info(user.getEmail() + ": auth confirmed");
-        userService.updateAuth(userId, 1);
 
-        return "";
+        // authKey가 같은 경우
+        if(authKey.equals(user.getAuthKey())) {
+            logger.info(user.getEmail() + ": auth confirmed");
+            userService.updateAuth(userId, 1);
+            return "auth confirmed";
+        } else { // 이미 인증 했거나 authkey가 다른 경우
+            return "";
+        }
     }
 }

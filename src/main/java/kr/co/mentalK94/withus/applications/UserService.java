@@ -52,15 +52,15 @@ public class UserService {
         sendMail.setSubject("[With Us 위드어스] 회원가입 이메일 인증");
         sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
                 .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-                .append("<a href='http://localhost:9002/users/registerConfirm?uid=")
+                .append("<a href='http://localhost:9306/users/registerConfirm?uid=")
                 .append(user.getId())
                 .append("&email=")
                 .append(user.getEmail())
-                .append("&authkey=")
+                .append("&authKey=")
                 .append(authKey)
                 .append("' target='_blank'>이메일 인증 확인</a>")
                 .toString());
-        sendMail.setFrom("doingnow94@gmail.com ", "hansol kim");
+        sendMail.setFrom("doingnow94@gmail.com ", "위드어스");
         sendMail.setTo(user.getEmail());
         sendMail.send();
 
