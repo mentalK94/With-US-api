@@ -4,8 +4,8 @@
 
     <!-- 데이터 삽입 -->
     <insert id = "insertUser" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.User">
-		INSERT INTO user(email, password, name, phone, address, detailAddress, zonecode)
-					VALUES(#{email}, #{password}, #{name}, #{phone}, #{address}, #{detailAddress}, #{zonecode})
+		INSERT INTO user(email, password, name, phone, address, detailAddress, zonecode, authKey)
+					VALUES(#{email}, #{password}, #{name}, #{phone}, #{address}, #{detailAddress}, #{zonecode}, #{authKey})
 	</insert>
 
     <!--데이터 조회 -->
@@ -48,6 +48,13 @@
 	<update id="updatePointByUserId" parameterType="map">
 		UPDATE user SET
 		point = #{point}
+		WHERE id = #{userId}
+	</update>
+
+	<!--데이터 수정 (유저 상태 수정) -->
+	<update id="updateAuth" parameterType="map">
+		UPDATE user SET
+		auth = #{auth}
 		WHERE id = #{userId}
 	</update>
 </mapper>

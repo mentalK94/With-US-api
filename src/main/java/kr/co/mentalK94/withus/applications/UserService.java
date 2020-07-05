@@ -2,6 +2,8 @@ package kr.co.mentalK94.withus.applications;
 
 import kr.co.mentalK94.withus.domains.User;
 import kr.co.mentalK94.withus.mappers.UserMapper;
+import kr.co.mentalK94.withus.utils.MailUtil;
+import kr.co.mentalK94.withus.utils.TempKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 
 @Service
 public class UserService {
@@ -28,33 +33,34 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public void addUser(User user) {
+    public void addUser(User user) throws MessagingException, UnsupportedEncodingException {
 
         // 패스워드 해싱
         String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
         // logger.info(encodedPassword);
         user.setPassword(encodedPassword);
 
+        // autoKey생성
+        String authKey = new TempKeyUtil().getKey(50, false);
+
+        user.setAuthKey(authKey);
         userMapper.insertUser(user);
 
-        // autoKey생성
-        String authKey = new TempKey().getKey(50, false);
-
         // mail 작성 관련
-        MailUtils sendMail = new MailUtils(mailSender);
+        MailUtil sendMail = new MailUtil(mailSender);
 
         sendMail.setSubject("[With Us 위드어스] 회원가입 이메일 인증");
         sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
                 .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-                .append("<a href='http://localhost:9002/users/joinConfirm?uid=")
-                .append(user.getUid())
+                .append("<a href='http://localhost:9002/users/registerConfirm?uid=")
+                .append(user.getId())
                 .append("&email=")
                 .append(user.getEmail())
                 .append("&authkey=")
                 .append(authKey)
-                .append("' target='_blenk'>이메일 인증 확인</a>")
+                .append("' target='_blank'>이메일 인증 확인</a>")
                 .toString());
-        sendMail.setFrom("위드어스 ", "김한솔");
+        sendMail.setFrom("doingnow94@gmail.com ", "hansol kim");
         sendMail.setTo(user.getEmail());
         sendMail.send();
 
@@ -96,5 +102,9 @@ public class UserService {
 
     public void updateCartMyUser(User user) {
         userMapper.updateCartByUserId(user);
+    }
+
+    public void updateAuth(Long userId, int status) {
+        userMapper.updateAuth(userId, status);
     }
 }

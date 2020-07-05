@@ -20,4 +20,6 @@ public interface UserMapper {
     void updateCartByUserId(User user);
 
     void updatePointByUserId(@Param("userId")Long userId, @Param("point")int point);
+
+    void updateAuth(@Param("userId")Long userId, @Param("status")int status);
 }

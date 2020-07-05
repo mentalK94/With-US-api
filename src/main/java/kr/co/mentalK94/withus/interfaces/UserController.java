@@ -3,13 +3,16 @@ package kr.co.mentalK94.withus.interfaces;
 import kr.co.mentalK94.withus.applications.UserService;
 import kr.co.mentalK94.withus.domains.User;
 import org.apache.catalina.startup.Tomcat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -19,8 +22,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @PostMapping("/users")
-    public ResponseEntity<?> create(@RequestBody User resource) throws URISyntaxException {
+    public ResponseEntity<?> create(@RequestBody User resource) throws URISyntaxException, UnsupportedEncodingException, MessagingException {
 
         User user = User.builder()
                         .email(resource.getEmail())
@@ -36,5 +41,15 @@ public class UserController {
 
         String url = "users/" + user.getId();
         return ResponseEntity.created(new URI(url)).body("user create successfully");
+    }
+
+    @GetMapping("/users/registerConfirm")
+    public String confirm(@RequestParam("uid")Long userId, @RequestParam("email")String email,
+                          @RequestParam("authKey")String authKey) {
+        User user = userService.getMyUser(userId);
+        logger.info(user.getEmail() + ": auth confirmed");
+        userService.updateAuth(userId, 1);
+
+        return "";
     }
 }
