@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mentalK94.withus.mappers.CategoryMapper">
+
+	<!-- 데이터 삽입 -->
+	<insert id = "insertCategory" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.Category">
+		INSERT INTO category(categoryName)
+		VALUES(#{categoryName})
+	</insert>
+
+	<!--데이터 조회 -->
+	<select id="selectCategoryById" resultType="kr.co.mentalK94.withus.domains.Category">
+		SELECT * FROM category
+		WHERE id = #{id}
+	</select>
+
+</mapper>

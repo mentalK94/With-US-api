@@ -13,6 +13,8 @@ public interface ProductMapper {
 
     List<Product> selectProductList() throws Exception;
 
+    List<Product> selectProductByCategoryId(Long categoryId) throws Exception;
+
     Product selectProduct(Long id) throws Exception;
 
     int selectProductStock(Long id);

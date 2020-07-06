@@ -4,8 +4,8 @@
 
 	<!-- 데이터 삽입 -->
 	<insert id = "insertProduct" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.Product">
-		INSERT INTO product(name, category, price, manufacturer, stock, description, imageFileName, limitedQuantity)
-					VALUES(#{name}, #{category}, #{price}, #{manufacturer}, #{stock}, #{description}, #{imageFileName}, #{limitedQuantity})
+		INSERT INTO product(name, categoryId, price, manufacturer, stock, description, imageFileName, limitedQuantity)
+					VALUES(#{name}, #{categoryId}, #{price}, #{manufacturer}, #{stock}, #{description}, #{imageFileName}, #{limitedQuantity})
 	</insert>
 
 	<!--데이터 조회 -->
@@ -25,11 +25,17 @@
 		SELECT * FROM product
 	</select>
 
+	<!--데이터 조회(카테고리 별 조회) -->
+	<select id="selectProductByCategoryId" resultType="kr.co.mentalK94.withus.domains.Product">
+		SELECT * FROM product
+		WHERE categoryId = #{categoryId}
+	</select>
+
 	<!--데이터 수정 -->
 	<update id="updateProduct" parameterType="map">
 		UPDATE product SET
 		name = #{product.name},
-		category = #{product.category},
+		categoryId = #{product.categoryId},
 		price = #{product.price},
 		manufacturer = #{product.manufacturer},
 		stock = #{product.stock},
