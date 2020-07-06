@@ -7,6 +7,7 @@ import kr.co.mentalK94.withus.utils.JWTUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -37,7 +38,21 @@ public class LoginController {
         String email = resource.getEmail();
         String password = resource.getPassword();
 
+        User userAuthCheck = userService.getMyUserByEmail(email);
+
+        if(userAuthCheck == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 해당 계정이 존재하지 않는 경우 -> response 404
+        }
+
+        if(userAuthCheck.getAuth() == 0) { // 인증되지 않은 계정인 경우 -> response 401
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
         User user = userService.authenticate(email, password);
+
+        if(user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 비밀번호가 일치하지 않는 경우 -> response 404
+        }
 
         String accessToken = jwtUtil.crateToken(user.getId(), user.getName());
 

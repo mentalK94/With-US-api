@@ -72,11 +72,13 @@ public class UserService {
         User user = userMapper.selectByUserEmail(email);
 
         if(user == null) { // email이 존재 하는 경우
-            throw new AuthenticationWrongException();
+            //throw new AuthenticationWrongException();
+            return null;
         }
 
-        if(!passwordEncoder.matches(password, user.getPassword())) { // �스�드가 �치�� �는 경우
-            throw new AuthenticationWrongException();
+        if(!passwordEncoder.matches(password, user.getPassword())) { // 패스워드가 일치하지 않는 경우
+            // throw new AuthenticationWrongException();
+            return null;
         }
 
         return user;
@@ -106,5 +108,9 @@ public class UserService {
 
     public void updateAuth(Long userId, int status) {
         userMapper.updateAuth(userId, status);
+    }
+
+    public User getMyUserByEmail(String email) {
+        return userMapper.selectByUserEmail(email);
     }
 }
