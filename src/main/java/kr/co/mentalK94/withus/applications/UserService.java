@@ -106,8 +106,8 @@ public class UserService {
         userMapper.updateCartByUserId(user);
     }
 
-    public void updateAuth(Long userId, int auth) {
-        userMapper.updateAuth(userId, auth);
+    public void updateAuth(Long userId, int auth, String initKey) {
+        userMapper.updateAuth(userId, auth, initKey);
     }
 
     public User getMyUserByEmail(String email) {

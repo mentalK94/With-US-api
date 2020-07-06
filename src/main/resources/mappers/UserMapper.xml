@@ -54,7 +54,8 @@
 	<!--데이터 수정 (유저 상태 수정) -->
 	<update id="updateAuth" parameterType="map">
 		UPDATE user SET
-		auth = #{auth}
+		auth = #{auth},
+		authKey = #{initKey}
 		WHERE id = #{userId}
 	</update>
 </mapper>
