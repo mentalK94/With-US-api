@@ -21,5 +21,5 @@ public interface UserMapper {
 
     void updatePointByUserId(@Param("userId")Long userId, @Param("point")int point);
 
-    void updateAuth(@Param("userId")Long userId, @Param("status")int status);
+    void updateAuth(@Param("userId")Long userId, @Param("auth")int auth);
 }

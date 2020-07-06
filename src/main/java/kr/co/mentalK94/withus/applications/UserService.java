@@ -52,7 +52,7 @@ public class UserService {
         sendMail.setSubject("[With Us 위드어스] 회원가입 이메일 인증");
         sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
                 .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-                .append("<a href='http://localhost:9306/users/registerConfirm?uid=")
+                .append("<a href='http://localhost:9306/registerConfirm?uid=")
                 .append(user.getId())
                 .append("&email=")
                 .append(user.getEmail())
@@ -106,8 +106,8 @@ public class UserService {
         userMapper.updateCartByUserId(user);
     }
 
-    public void updateAuth(Long userId, int status) {
-        userMapper.updateAuth(userId, status);
+    public void updateAuth(Long userId, int auth) {
+        userMapper.updateAuth(userId, auth);
     }
 
     public User getMyUserByEmail(String email) {
