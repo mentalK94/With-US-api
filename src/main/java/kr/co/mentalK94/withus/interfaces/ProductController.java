@@ -31,6 +31,11 @@ public class ProductController {
         return productService.getProductList();
     }
 
+    @GetMapping("/products/recommend")
+    public List<Product> todayList() throws Exception {
+        return productService.getProductTodayList();
+    }
+
     @GetMapping("/products/categories/{categoryId}")
     public List<Product> listByCategory(@PathVariable("categoryId") Long categoryId) throws Exception {
         return productService.getProductListByCategoryId(categoryId);

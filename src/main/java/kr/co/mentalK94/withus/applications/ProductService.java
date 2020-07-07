@@ -40,4 +40,8 @@ public class ProductService {
     public List<Product> getProductListByCategoryId(Long categoryId) throws Exception {
         return productMapper.selectProductByCategoryId(categoryId);
     }
+
+    public List<Product> getProductTodayList() {
+        return productMapper.selectProductTodayList();
+    }
 }

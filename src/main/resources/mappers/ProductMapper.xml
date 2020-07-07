@@ -23,12 +23,21 @@
 	<!--데이터 전체조회 -->
 	<select id="selectProductList" resultType="kr.co.mentalK94.withus.domains.Product">
 		SELECT * FROM product
+		ORDER BY id DESC
+	</select>
+
+	<!--데이터 전체조회(오늘 등록된 상품) -->
+	<select id="selectProductTodayList" resultType="kr.co.mentalK94.withus.domains.Product">
+		SELECT * FROM product
+		WHERE registerDate > DATE_SUB(NOW(), INTERVAL 1 DAY)
+		ORDER BY id DESC
 	</select>
 
 	<!--데이터 조회(카테고리 별 조회) -->
 	<select id="selectProductByCategoryId" resultType="kr.co.mentalK94.withus.domains.Product">
 		SELECT * FROM product
 		WHERE categoryId = #{categoryId}
+		ORDER BY id DESC
 	</select>
 
 	<!--데이터 수정 -->
