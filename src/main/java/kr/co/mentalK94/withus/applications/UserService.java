@@ -67,11 +67,11 @@ public class UserService {
     }
 
 
-    // 로그로직
+    // 인증 로직
     public User authenticate(String email, String password) {
         User user = userMapper.selectByUserEmail(email);
 
-        if(user == null) { // email이 존재 하는 경우
+        if(user == null) { // 해당 이메일이 존재하지 않는 경우
             //throw new AuthenticationWrongException();
             return null;
         }
