@@ -16,7 +16,7 @@ import java.time.LocalTime;
 @RestController
 public class FileUploadController {
 
-    private static final String SAVE_PATH = "D:/hansol/With-us/With-US-Web/public/img/uploadImage/";
+    private static final String SAVE_PATH = "D:/hansol/With-us/With-US-api/src/main/resources/static/img/";
 
     @Autowired
     private ProductService productService;

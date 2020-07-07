@@ -33,3 +33,6 @@ out/
 
 ### application.properties ###
 src/main/resources/application.properties
+
+### image
+src/main/resources/static/**
