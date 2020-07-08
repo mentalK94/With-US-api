@@ -23,6 +23,7 @@
 	<select id="selectQuestionAnswerByProductId" resultType="kr.co.mentalK94.withus.domains.QuestionAnswer">
 		SELECT * FROM questionanswer
 		WHERE productId = #{productId}
+		ORDER BY id DESC
 	</select>
 
 	<!--데이터 전체조회(전체 리스트 -> 관리자용) -->
