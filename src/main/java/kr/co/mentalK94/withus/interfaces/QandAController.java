@@ -6,13 +6,11 @@ import kr.co.mentalK94.withus.domains.QuestionAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 public class QandAController {
@@ -28,9 +26,9 @@ public class QandAController {
         String username = getUserName(authentication);
 
         QuestionAnswer questionAnswer = QuestionAnswer.builder().productId(resource.getProductId())
-                                                        .question(resource.getQuestion())
-                                                        .questionWriter(username)
-                                                        .build();
+                .question(resource.getQuestion())
+                .questionWriter(username)
+                .build();
 
         qandAService.writeQuestion(questionAnswer);
 
@@ -45,11 +43,21 @@ public class QandAController {
 
         // admin -> answer 작성
         String admin = getUserName(authentication);
-
         qandAService.writeAnswer(resource.getId(), resource.getAnswer(), admin);
-
         return ResponseEntity.ok("answer success");
 
+    }
+
+    @GetMapping("/questionAnswers")
+    public List<QuestionAnswer> list() {
+        // TODO: 전체 Q&A목록 가져오기
+        return qandAService.selectQuestionAnswerList();
+    }
+
+    @GetMapping("/questionAnswers/{productId}")
+    public List<QuestionAnswer> listByProductId(@PathVariable("productId")
+                                                            Long productId) {
+        return qandAService.selectQuestionAnswerListByProductId(productId);
     }
 
     private String getUserName(Authentication authentication) {

@@ -18,4 +18,7 @@ public interface QandAMapper {
     void insertAnswer(@Param("questionAnswerId")Long questionAnswerId,
                       @Param("answer")String answer, @Param("answerWriter")String answerWriter);
 
+    List<QuestionAnswer> selectQuestionAnswer();
+
+    List<QuestionAnswer> selectQuestionAnswerByProductId(Long productId);
 }
