@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mentalK94.withus.mappers.QandAMapper">
+
+	<!-- 데이터 삽입(질문 등록) -->
+
+
+	<insert id = "insertQuestion" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.QuestionAnswer">
+		INSERT INTO questionanswer(productId, question, questionWriter)
+					VALUES(#{productId}, #{question}, #{questionWriter})
+	</insert>
+
+	<!--데이터 삽입(답변 등록) -->
+	<update id="insertAnswer" parameterType="map">
+		UPDATE questionanswer SET
+		answer = #{answer},
+		answerWriter = #{answerWriter},
+		answerRegisterDate = NOW()
+		WHERE id = #{questionAnswerId}
+	</update>
+
+	<!--데이터 조회(상품별 조회) -->
+	<select id="selectQuestionAnswerByProductId" resultType="kr.co.mentalK94.withus.domains.QuestionAnswer">
+		SELECT * FROM questionanswer
+		WHERE productId = #{productId}
+		ORDER BY id DESC
+	</select>
+
+	<!--데이터 전체조회(전체 리스트 -> 관리자용) -->
+	<select id="selectQuestionAnswer" resultType="kr.co.mentalK94.withus.domains.QuestionAnswer">
+		SELECT * FROM questionanswer
+		ORDER BY id DESC
+	</select>
+</mapper>
