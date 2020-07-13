@@ -26,17 +26,7 @@ public class FileUploadController {
                          @RequestParam("productImage")MultipartFile file
                          ) throws Exception {
 
-        // LocalTime nowTime = LocalTime.now();
-        File convertFile = new File(SAVE_PATH +  file.getOriginalFilename());
-        convertFile.createNewFile();
-
-        try(FileOutputStream fout = new FileOutputStream(convertFile)) {
-            fout.write(file.getBytes());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        productService.imageUpdate(file.getOriginalFilename(), id);
+        productService.imageUpdate(SAVE_PATH, file, id);
 
         return "file has uploaded successfully";
     }
