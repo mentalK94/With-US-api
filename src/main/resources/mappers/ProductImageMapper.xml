@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mentalK94.withus.mappers.ProductImageMapper">
+
+	<!-- 데이터 삽입 -->
+	<insert id = "insertImages" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.ProductImage">
+		INSERT INTO product(name, categoryId, price, manufacturer, stock, description, imageFileName, limitedQuantity)
+					VALUES(#{name}, #{categoryId}, #{price}, #{manufacturer}, #{stock}, #{description}, #{imageFileName}, #{limitedQuantity})
+	</insert>
+
+</mapper>
