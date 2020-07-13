@@ -2,6 +2,7 @@ package kr.co.mentalK94.withus.applications;
 
 import kr.co.mentalK94.withus.domains.Product;
 import kr.co.mentalK94.withus.mappers.ProductMapper;
+import kr.co.mentalK94.withus.utils.FilenameUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,7 +36,10 @@ public class ProductService {
 
     public void imageUpdate(String savePath, MultipartFile file, Long id) throws IOException {
 
-        File convertFile = new File(savePath +  file.getOriginalFilename());
+        // 파일명 생성 메서드 호출
+        String filename = FilenameUtil.make(file.getOriginalFilename());
+
+        File convertFile = new File(savePath +  filename);
         convertFile.createNewFile();
 
         try(FileOutputStream fout = new FileOutputStream(convertFile)) {
@@ -44,7 +48,7 @@ public class ProductService {
             e.printStackTrace();
         }
 
-        productMapper.imageUpdate(file.getOriginalFilename(), id);
+        productMapper.imageUpdate(filename, id);
     }
 
     public int deleteProduct(Long id) {
