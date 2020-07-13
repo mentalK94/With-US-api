@@ -16,7 +16,8 @@ import java.time.LocalTime;
 @RestController
 public class FileUploadController {
 
-    private static final String SAVE_PATH = "D:/hansol/With-us/with-us-api/With-US-api/build/resources/main/static/img/";
+    private static final String SAVE_PRODUCT_PATH = "D:/hansol/With-us/with-us-api/With-US-api/build/resources/main/static/img/";
+    private static final String SAVE_PRODUCT_INFO_PATH = "D:/hansol/With-us/with-us-api/With-US-api/build/resources/main/static/productInfoImages/";
 
     @Autowired
     private ProductService productService;
@@ -26,17 +27,7 @@ public class FileUploadController {
                          @RequestParam("productImage")MultipartFile file
                          ) throws Exception {
 
-        // LocalTime nowTime = LocalTime.now();
-        File convertFile = new File(SAVE_PATH +  file.getOriginalFilename());
-        convertFile.createNewFile();
-
-        try(FileOutputStream fout = new FileOutputStream(convertFile)) {
-            fout.write(file.getBytes());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        productService.imageUpdate(file.getOriginalFilename(), id);
+        productService.imageUpdate(SAVE_PRODUCT_PATH, file, id);
 
         return "file has uploaded successfully";
     }

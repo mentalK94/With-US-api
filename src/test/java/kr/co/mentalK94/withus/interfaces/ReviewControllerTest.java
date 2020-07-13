@@ -39,11 +39,6 @@ class ReviewControllerTest {
 
         Review mockReview = Review.builder().productId(3L).rating(3.0).writer("hansol").description("품질이 뛰어나요").build();
 
-        given(reviewService.addReview(mockReview)).willReturn(
-                Review.builder()
-                        .id(1L)
-                        .build()
-        );
 
 //        given(reviewService.addReview(3L, "hansol", 3.0, "품질이 뛰어나요")).willReturn(
 //

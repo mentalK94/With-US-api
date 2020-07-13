@@ -1,6 +1,7 @@
 package kr.co.mentalK94.withus.applications;
 
 import kr.co.mentalK94.withus.domains.Purchase;
+import kr.co.mentalK94.withus.mappers.ProductMapper;
 import kr.co.mentalK94.withus.mappers.PurchaseMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,11 +19,14 @@ public class PurchaseServiceTest {
     @Mock
     private PurchaseMapper purchaseMapper;
 
+    @Mock
+    private ProductMapper productMapper;
+
     @BeforeEach
     public void setUp(){
 
         MockitoAnnotations.initMocks(this);
-        purchaseService = new PurchaseService(purchaseMapper);
+        purchaseService = new PurchaseService(purchaseMapper, productMapper);
     }
 
 
