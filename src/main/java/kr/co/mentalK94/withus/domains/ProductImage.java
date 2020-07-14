@@ -15,5 +15,11 @@ public class ProductImage {
 
     private Long productId;
 
-    private List<String> productImages;
+    private String productImage1;
+
+    private String productImage2;
+
+    private String productImage3;
+
+    private String productImage4;
 }

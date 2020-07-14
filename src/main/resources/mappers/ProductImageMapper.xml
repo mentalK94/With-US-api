@@ -4,8 +4,8 @@
 
 	<!-- 데이터 삽입 -->
 	<insert id = "insertImages" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.ProductImage">
-		INSERT INTO product(name, categoryId, price, manufacturer, stock, description, imageFileName, limitedQuantity)
-					VALUES(#{name}, #{categoryId}, #{price}, #{manufacturer}, #{stock}, #{description}, #{imageFileName}, #{limitedQuantity})
+		INSERT INTO productimage(productId, productImage1, productImage2, productImage3, productImage4)
+					VALUES(#{productId}, #{productImage1}, #{productImage2}, #{productImage3}, #{productImage4})
 	</insert>
 
 </mapper>

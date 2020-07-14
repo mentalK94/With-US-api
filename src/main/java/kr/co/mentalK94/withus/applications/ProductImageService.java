@@ -42,7 +42,13 @@ public class ProductImageService {
             }
         }
 
-        ProductImage productImage = ProductImage.builder().productId(id).productImages(filenames).build();
+        ProductImage productImage = ProductImage.builder()
+                .productId(id)
+                .productImage1(filenames.get(0))
+                .productImage2(filenames.get(1))
+                .productImage3(filenames.get(2))
+                .productImage4(filenames.get(3))
+                .build();
 
         productImageMapper.insertImages(productImage);
     }

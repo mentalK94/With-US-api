@@ -1,5 +1,6 @@
 package kr.co.mentalK94.withus.interfaces;
 
+import kr.co.mentalK94.withus.applications.ProductImageService;
 import kr.co.mentalK94.withus.applications.ProductService;
 import kr.co.mentalK94.withus.domains.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class FileUploadController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProductImageService productImageService;
 
     @PostMapping("/upload/{id}")
     public String upload(@PathVariable("id") Long id,
@@ -49,7 +53,7 @@ public class FileUploadController {
         imageFiles.add(file3);
         imageFiles.add(file4);
 
-        productService.imagesUpdate(SAVE_PRODUCT_INFO_PATH, imageFiles, id);
+        productImageService.imagesUpdate(SAVE_PRODUCT_INFO_PATH, imageFiles, id);
 
         return "file has uploaded successfully";
     }
