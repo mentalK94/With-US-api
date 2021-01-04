@@ -30,6 +30,11 @@ public class UserController {
     @PostMapping("/users")
     public ResponseEntity<?> create(@RequestBody User resource) throws URISyntaxException, UnsupportedEncodingException, MessagingException {
 
+        // 해당 이메일을 사용하고 있는 User가 존재하는지 확인
+        if(userService.getUserByEmail(resource.getEmail()) != null) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT); // 409 응답
+        }
+
         User user = User.builder()
                         .email(resource.getEmail())
                         .password(resource.getPassword())
@@ -63,14 +68,14 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users/emailCheck")
-    public ResponseEntity<?> emailConfirm(@RequestParam("email")String email) {
-        User user = userService.getMyUserByEmail(email);
-
-        if(user != null) { // 이메일이 이미 존재하는 경우
-            return new ResponseEntity<>(HttpStatus.CONFLICT); // 409 응답
-        }
-
-        return new ResponseEntity<>(HttpStatus.OK); // 200 응답
-    }
+//    @GetMapping("/users/emailCheck")
+//    public ResponseEntity<?> emailConfirm(@RequestParam("email")String email) {
+//        User user = userService.getMyUserByEmail(email);
+//
+//        if(user != null) { // 이메일이 이미 존재하는 경우
+//            return new ResponseEntity<>(HttpStatus.CONFLICT); // 409 응답
+//        }
+//
+//        return new ResponseEntity<>(HttpStatus.OK); // 200 응답
+//    }
 }
