@@ -110,7 +110,8 @@ public class UserService {
         userMapper.updateAuth(userId, auth, initKey);
     }
 
-    public User getMyUserByEmail(String email) {
+    // email을 통한 User검색
+    public User getUserByEmail(String email) {
         return userMapper.selectByUserEmail(email);
     }
 }

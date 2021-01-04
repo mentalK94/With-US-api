@@ -38,7 +38,7 @@ public class LoginController {
         String email = resource.getEmail();
         String password = resource.getPassword();
 
-        User userAuthCheck = userService.getMyUserByEmail(email);
+        User userAuthCheck = userService.getUserByEmail(email);
 
         if(userAuthCheck == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 해당 계정이 존재하지 않는 경우 -> response 404
