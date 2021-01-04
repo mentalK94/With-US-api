@@ -8,9 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
@@ -22,7 +24,7 @@ public class UserService {
     private UserMapper userMapper;
 
     @Autowired
-    private JavaMailSender mailSender;
+    private MailService mailService;
 
     PasswordEncoder passwordEncoder;
 
@@ -33,11 +35,10 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public void addUser(User user) throws MessagingException, UnsupportedEncodingException {
+    public void addUser(User user) throws UnsupportedEncodingException, MessagingException {
 
         // 패스워드 해싱
         String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
-        // logger.info(encodedPassword);
         user.setPassword(encodedPassword);
 
         // autoKey생성
@@ -46,24 +47,7 @@ public class UserService {
         user.setAuthKey(authKey);
         userMapper.insertUser(user);
 
-        // mail 작성 관련
-        MailUtil sendMail = new MailUtil(mailSender);
-
-        sendMail.setSubject("[With Us 위드어스] 회원가입 이메일 인증");
-        sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
-                .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-                .append("<a href='http://localhost:9306/registerConfirm?uid=")
-                .append(user.getId())
-                .append("&email=")
-                .append(user.getEmail())
-                .append("&authKey=")
-                .append(authKey)
-                .append("' target='_blank'>이메일 인증 확인</a>")
-                .toString());
-        sendMail.setFrom("doingnow94@gmail.com ", "위드어스");
-        sendMail.setTo(user.getEmail());
-        sendMail.send();
-
+        mailService.sendAuthMail(user, authKey);
     }
 
 
@@ -98,7 +82,7 @@ public class UserService {
         userMapper.updatePointByUserId(userId, point);
     }
 
-    public User getMyUser(Long userId) {
+    public User getUserById(Long userId) {
         return userMapper.selectByUserId(userId);
     }
 

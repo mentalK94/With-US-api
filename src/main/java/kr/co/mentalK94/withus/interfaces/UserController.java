@@ -2,17 +2,14 @@ package kr.co.mentalK94.withus.interfaces;
 
 import kr.co.mentalK94.withus.applications.UserService;
 import kr.co.mentalK94.withus.domains.User;
-import org.apache.catalina.startup.Tomcat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -54,7 +51,9 @@ public class UserController {
     @GetMapping("/users/registerConfirm")
     public ResponseEntity<?> confirm(@RequestParam("uid")Long userId, @RequestParam("email")String email,
                           @RequestParam("authKey")String authKey) {
-        User user = userService.getMyUser(userId);
+        User user = userService.getUserById(userId);
+
+        // 이메일도 같은지 확인하지 않는다면 어떤 이슈가 발생할지 고민해보자
 
         if(authKey.equals(user.getAuthKey())) { // authKey가 같은 경우 -> 응답코드 201
             logger.info(user.getEmail() + ": auth confirmed");
