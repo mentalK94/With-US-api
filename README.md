@@ -1,7 +1,7 @@
-# With-Us-API
+# wocket-api
 쇼핑몰 웹 서버
 
-### With-Us Server with Spring Boot
+### wocket-api with Spring Boot
 
 ### 주요기능
 ```
