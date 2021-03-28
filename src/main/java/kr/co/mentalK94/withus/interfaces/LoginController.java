@@ -2,7 +2,7 @@ package kr.co.mentalK94.withus.interfaces;
 
 import io.jsonwebtoken.Claims;
 import kr.co.mentalK94.withus.applications.UserService;
-import kr.co.mentalK94.withus.domains.User;
+import kr.co.mentalK94.withus.domains.Customer;
 import kr.co.mentalK94.withus.utils.JWTUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,23 +38,23 @@ public class LoginController {
         String email = resource.getEmail();
         String password = resource.getPassword();
 
-        User userAuthCheck = userService.getUserByEmail(email);
+        Customer customerAuthCheck = userService.getUserByEmail(email);
 
-        if(userAuthCheck == null) {
+        if(customerAuthCheck == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 해당 계정이 존재하지 않는 경우 -> response 404
         }
 
-        if(userAuthCheck.getAuth() == 0) { // 인증되지 않은 계정인 경우 -> response 401
+        if(customerAuthCheck.getAuth() == 0) { // 인증되지 않은 계정인 경우 -> response 401
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        User user = userService.authenticate(email, password);
+        Customer customer = userService.authenticate(email, password);
 
-        if(user == null) {
+        if(customer == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 비밀번호가 일치하지 않는 경우 -> response 404
         }
 
-        String accessToken = jwtUtil.crateToken(user.getId(), user.getName());
+        String accessToken = jwtUtil.crateToken(customer.getId(), customer.getName());
 
         logger.info(accessToken);
         LoginResponseDTO loginResponseDTO = LoginResponseDTO.builder().accessToken(accessToken).build();
@@ -65,20 +65,20 @@ public class LoginController {
     }
 
     @PostMapping("/loginUser")
-    public User loginUser(Authentication authentication) {
+    public Customer loginUser(Authentication authentication) {
         
         Claims claims = (Claims) authentication.getPrincipal();
 
         Long userId = claims.get("userId", Long.class);
 
-        User user = userService.getUserById(userId);
-        User loginUser = User.builder().id(user.getId()).address(user.getAddress())
-                .email(user.getEmail()).name(user.getName())
-                .phone(user.getPhone()).point(user.getPoint())
-                .zonecode(user.getZonecode()).detailAddress(user.getDetailAddress())
+        Customer customer = userService.getUserById(userId);
+        Customer loginCustomer = Customer.builder().id(customer.getId()).address(customer.getAddress())
+                .email(customer.getEmail()).name(customer.getName())
+                .phone(customer.getPhone()).point(customer.getPoint())
+                .zonecode(customer.getZonecode()).detailAddress(customer.getDetailAddress())
                 .build();
 
 //        logger.info("loginUser : " + loginUser.getName());
-        return loginUser;
+        return loginCustomer;
     }
 }

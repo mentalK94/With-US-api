@@ -3,57 +3,57 @@
 <mapper namespace="kr.co.mentalK94.withus.mappers.UserMapper">
 
     <!-- 데이터 삽입 -->
-    <insert id = "insertUser" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.User">
-		INSERT INTO user(email, password, name, phone, address, detailAddress, zonecode, authKey)
+    <insert id = "insertUser" useGeneratedKeys="true" keyProperty="id" parameterType="kr.co.mentalK94.withus.domains.Customer">
+		INSERT INTO customer(email, password, name, phone, address, detailAddress, zonecode, authKey)
 					VALUES(#{email}, #{password}, #{name}, #{phone}, #{address}, #{detailAddress}, #{zonecode}, #{authKey})
 	</insert>
 
     <!--데이터 조회 -->
-	<select id="selectUser" resultType="kr.co.mentalK94.withus.domains.User">
-		SELECT * FROM user
+	<select id="selectUser" resultType="kr.co.mentalK94.withus.domains.Customer">
+		SELECT * FROM customer
 		WHERE id = #{id}
 	</select>
 
 	<!-- 이메일에 따른 데이터 조회 -->
-	<select id="selectByUserEmail" resultType="kr.co.mentalK94.withus.domains.User">
-		SELECT * FROM user
+	<select id="selectByUserEmail" resultType="kr.co.mentalK94.withus.domains.Customer">
+		SELECT * FROM customer
 		WHERE email = #{email}
 	</select>
 
 	<!-- 유저 id에 따른 데이터 조회 -->
-	<select id="selectByUserId" resultType="kr.co.mentalK94.withus.domains.User">
-		SELECT * FROM user
+	<select id="selectByUserId" resultType="kr.co.mentalK94.withus.domains.Customer">
+		SELECT * FROM customer
 		WHERE id = #{userId}
 	</select>
 
 	<!-- 유저 id에 따른 데이터 조회 -->
 	<select id="selectPointByUserId" resultType="int">
-		SELECT point FROM user
+		SELECT point FROM customer
 		WHERE id = #{userId}
 	</select>
 
     <!--데이터 전체조회 -->
-    <select id="selectUserList" resultType="kr.co.mentalK94.withus.domains.User">
-		SELECT * FROM user
+    <select id="selectUserList" resultType="kr.co.mentalK94.withus.domains.Customer">
+		SELECT * FROM customer
 	</select>
 
 	<!--데이터 수정 (장바구니 추가) -->
-	<update id="updateCartByUserId" parameterType="kr.co.mentalK94.withus.domains.User">
-		UPDATE user SET
+	<update id="updateCartByUserId" parameterType="kr.co.mentalK94.withus.domains.Customer">
+		UPDATE customer SET
 		cartId = #{cartId}
 		WHERE id = #{id}
 	</update>
 
 	<!--데이터 수정 (포인트 수정) -->
 	<update id="updatePointByUserId" parameterType="map">
-		UPDATE user SET
+		UPDATE customer SET
 		point = #{point}
 		WHERE id = #{userId}
 	</update>
 
 	<!--데이터 수정 (유저 상태 수정) -->
 	<update id="updateAuth" parameterType="map">
-		UPDATE user SET
+		UPDATE customer SET
 		auth = #{auth},
 		authKey = #{initKey}
 		WHERE id = #{userId}

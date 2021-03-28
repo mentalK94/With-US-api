@@ -1,6 +1,6 @@
 package kr.co.mentalK94.withus.mappers;
 
-import kr.co.mentalK94.withus.domains.User;
+import kr.co.mentalK94.withus.domains.Customer;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -9,15 +9,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper {
 
-    void insertUser(User user);
+    void insertUser(Customer customer);
 
-    User selectByUserEmail(String email);
+    Customer selectByUserEmail(String email);
 
-    User selectByUserId(Long userId);
+    Customer selectByUserId(Long userId);
 
     int selectPointByUserId(Long userId);
 
-    void updateCartByUserId(User user);
+    void updateCartByUserId(Customer customer);
 
     void updatePointByUserId(@Param("userId")Long userId, @Param("point")int point);
 

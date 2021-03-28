@@ -1,6 +1,6 @@
 package kr.co.mentalK94.withus.applications;
 
-import kr.co.mentalK94.withus.domains.User;
+import kr.co.mentalK94.withus.domains.Customer;
 import kr.co.mentalK94.withus.utils.MailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,7 +19,7 @@ public class MailService {
 
     @Transactional
     @Async
-    public void sendAuthMail(User user, String authKey) throws MessagingException, UnsupportedEncodingException {
+    public void sendAuthMail(Customer customer, String authKey) throws MessagingException, UnsupportedEncodingException {
         // mail 작성 관련
         MailUtil sendMail = new MailUtil(mailSender);
 
@@ -27,15 +27,15 @@ public class MailService {
         sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
                 .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
                 .append("<a href='http://localhost:9306/registerConfirm?uid=")
-                .append(user.getId())
+                .append(customer.getId())
                 .append("&email=")
-                .append(user.getEmail())
+                .append(customer.getEmail())
                 .append("&authKey=")
                 .append(authKey)
                 .append("' target='_blank'>이메일 인증 확인</a>")
                 .toString());
         sendMail.setFrom("doingnow94@gmail.com ", "위드어스");
-        sendMail.setTo(user.getEmail());
+        sendMail.setTo(customer.getEmail());
         sendMail.send();
     }
 }

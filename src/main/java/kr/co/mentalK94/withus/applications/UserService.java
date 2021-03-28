@@ -1,18 +1,14 @@
 package kr.co.mentalK94.withus.applications;
 
-import kr.co.mentalK94.withus.domains.User;
+import kr.co.mentalK94.withus.domains.Customer;
 import kr.co.mentalK94.withus.mappers.UserMapper;
-import kr.co.mentalK94.withus.utils.MailUtil;
 import kr.co.mentalK94.withus.utils.TempKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
@@ -35,37 +31,37 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public void addUser(User user) throws UnsupportedEncodingException, MessagingException {
+    public void addUser(Customer customer) throws UnsupportedEncodingException, MessagingException {
 
         // 패스워드 해싱
-        String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
-        user.setPassword(encodedPassword);
+        String encodedPassword = new BCryptPasswordEncoder().encode(customer.getPassword());
+        customer.setPassword(encodedPassword);
 
         // autoKey생성
         String authKey = new TempKeyUtil().getKey(50, false);
 
-        user.setAuthKey(authKey);
-        userMapper.insertUser(user);
+        customer.setAuthKey(authKey);
+        userMapper.insertUser(customer);
 
-        mailService.sendAuthMail(user, authKey);
+        mailService.sendAuthMail(customer, authKey);
     }
 
 
     // 인증 로직
-    public User authenticate(String email, String password) {
-        User user = userMapper.selectByUserEmail(email);
+    public Customer authenticate(String email, String password) {
+        Customer customer = userMapper.selectByUserEmail(email);
 
-        if(user == null) { // 해당 이메일이 존재하지 않는 경우
+        if(customer == null) { // 해당 이메일이 존재하지 않는 경우
             //throw new AuthenticationWrongException();
             return null;
         }
 
-        if(!passwordEncoder.matches(password, user.getPassword())) { // 패스워드가 일치하지 않는 경우
+        if(!passwordEncoder.matches(password, customer.getPassword())) { // 패스워드가 일치하지 않는 경우
             // throw new AuthenticationWrongException();
             return null;
         }
 
-        return user;
+        return customer;
     }
 
     public void updateUsingPoint(Long userId, int usingPoint) {
@@ -82,12 +78,12 @@ public class UserService {
         userMapper.updatePointByUserId(userId, point);
     }
 
-    public User getUserById(Long userId) {
+    public Customer getUserById(Long userId) {
         return userMapper.selectByUserId(userId);
     }
 
-    public void updateCartMyUser(User user) {
-        userMapper.updateCartByUserId(user);
+    public void updateCartMyUser(Customer customer) {
+        userMapper.updateCartByUserId(customer);
     }
 
     public void updateAuth(Long userId, int auth, String initKey) {
@@ -95,7 +91,7 @@ public class UserService {
     }
 
     // email을 통한 User검색
-    public User getUserByEmail(String email) {
+    public Customer getUserByEmail(String email) {
         return userMapper.selectByUserEmail(email);
     }
 }

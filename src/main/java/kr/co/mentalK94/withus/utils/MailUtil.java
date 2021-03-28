@@ -1,10 +1,7 @@
 package kr.co.mentalK94.withus.utils;
 
-import kr.co.mentalK94.withus.domains.User;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;

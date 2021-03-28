@@ -2,9 +2,7 @@ package kr.co.mentalK94.withus.interfaces;
 
 import io.jsonwebtoken.Claims;
 import kr.co.mentalK94.withus.applications.ReviewService;
-import kr.co.mentalK94.withus.applications.UserService;
 import kr.co.mentalK94.withus.domains.Review;
-import kr.co.mentalK94.withus.domains.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
