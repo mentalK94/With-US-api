@@ -3,8 +3,7 @@ package kr.co.mentalK94.withus.interfaces;
 import io.jsonwebtoken.Claims;
 import kr.co.mentalK94.withus.applications.CartItemService;
 import kr.co.mentalK94.withus.applications.PurchaseService;
-import kr.co.mentalK94.withus.applications.UserService;
-import kr.co.mentalK94.withus.domains.Product;
+import kr.co.mentalK94.withus.applications.CustomerServiceImpl;
 import kr.co.mentalK94.withus.domains.Purchase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -30,7 +26,7 @@ public class PurchaseController {
     private PurchaseService purchaseService;
 
     @Autowired
-    private UserService userService;
+    private CustomerServiceImpl customerServiceImpl;
 
     @Autowired
     private CartItemService cartItemService;
@@ -60,7 +56,7 @@ public class PurchaseController {
         purchaseService.addPurchaseItem(purchase.getPurchaseItems(), purchase.getId());
 
         // user 포인트 갱신
-        userService.updateUsingPoint(purchase.getUserId(), purchase.getUsingPoint());
+        customerServiceImpl.updateUsedPoint(purchase.getUserId(), purchase.getUsingPoint());
 
         // user 장바구니 목록 삭제
         cartItemService.removeAllCartItems(purchase.getUserId());
