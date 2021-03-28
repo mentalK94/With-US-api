@@ -1,7 +1,7 @@
 package kr.co.mentalK94.withus.interfaces;
 
 import io.jsonwebtoken.Claims;
-import kr.co.mentalK94.withus.applications.UserService;
+import kr.co.mentalK94.withus.applications.CustomerServiceImpl;
 import kr.co.mentalK94.withus.domains.Customer;
 import kr.co.mentalK94.withus.utils.JWTUtil;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ import java.net.URISyntaxException;
 public class LoginController {
 
     @Autowired
-    private UserService userService;
+    private CustomerServiceImpl customerServiceImpl;
 
     @Autowired
     private JWTUtil jwtUtil;
@@ -38,7 +38,7 @@ public class LoginController {
         String email = resource.getEmail();
         String password = resource.getPassword();
 
-        Customer customerAuthCheck = userService.getUserByEmail(email);
+        Customer customerAuthCheck = customerServiceImpl.findCustomerByEmail(email);
 
         if(customerAuthCheck == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 해당 계정이 존재하지 않는 경우 -> response 404
@@ -48,7 +48,7 @@ public class LoginController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        Customer customer = userService.authenticate(email, password);
+        Customer customer = customerServiceImpl.authenticate(email, password);
 
         if(customer == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 비밀번호가 일치하지 않는 경우 -> response 404
@@ -69,13 +69,13 @@ public class LoginController {
         
         Claims claims = (Claims) authentication.getPrincipal();
 
-        Long userId = claims.get("userId", Long.class);
+        Long customerId = claims.get("customerId", Long.class);
 
-        Customer customer = userService.getUserById(userId);
+        Customer customer = customerServiceImpl.findCustomerById(customerId);
         Customer loginCustomer = Customer.builder().id(customer.getId()).address(customer.getAddress())
                 .email(customer.getEmail()).name(customer.getName())
-                .phone(customer.getPhone()).point(customer.getPoint())
-                .zonecode(customer.getZonecode()).detailAddress(customer.getDetailAddress())
+                .phoneNumber(customer.getPhoneNumber()).point(customer.getPoint())
+                .zoneCode(customer.getZoneCode()).detailAddress(customer.getDetailAddress())
                 .build();
 
 //        logger.info("loginUser : " + loginUser.getName());

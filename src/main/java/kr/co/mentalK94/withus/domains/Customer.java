@@ -7,14 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Customer {
+@EqualsAndHashCode(callSuper = true)
+public class Customer extends BaseTimeEntity {
 
     /**
      * 고객 entity의 기본키
@@ -73,24 +73,4 @@ public class Customer {
      * 고객 인증키
      * */
     private String verificationKey;
-
-    /**
-     * 고객 생성일자
-     * */
-    private LocalDateTime createdAt;
-
-    /**
-     * 고객 생성자
-     * */
-    private String createdBy;
-
-    /**
-     * 고객 수정일자
-     * */
-    private LocalDateTime updatedAt;
-
-    /**
-     * 고객 수정일자
-     * */
-    private String updatedBy;
 }
