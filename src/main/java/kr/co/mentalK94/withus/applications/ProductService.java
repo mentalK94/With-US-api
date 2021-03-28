@@ -1,65 +1,46 @@
 package kr.co.mentalK94.withus.applications;
 
 import kr.co.mentalK94.withus.domains.Product;
-import kr.co.mentalK94.withus.mappers.ProductMapper;
-import kr.co.mentalK94.withus.utils.FilenameUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-@Service
-public class ProductService {
+public interface ProductService {
 
-    @Autowired
-    ProductMapper productMapper;
+    /***
+     * Page별로 상품조회
+     * 1page size: 20
+     */
+    List<Product> findProductList(int page);
 
-    public List<Product> getProductList() throws Exception {
-        return productMapper.selectProductList();
-    }
+    /***
+     * id를 이용한 상품조회
+     */
+    Product findProductById(Long id);
 
-    public Product getProduct(Long id) throws Exception {
-        return productMapper.selectProduct(id);
-    }
+    /***
+     * 상품 추가
+     */
+    void createProduct(Product product);
 
-    public void addProduct(Product product) {
-        productMapper.insertProduct(product);
-    }
+    /***
+     * 상품 정보 수정
+     */
+    void updateProduct(Product product);
 
-    public void updateProduct(Product product, Long id) {
-        productMapper.updateProduct(product, id);
-    }
+    /***
+     * 상품 이미지 추가
+     */
+    void imageUpdate(String savePath, MultipartFile file, Long id) throws IOException;
 
-    public void imageUpdate(String savePath, MultipartFile file, Long id) throws IOException {
+    /***
+     * 상품 삭제
+     */
+    void deleteProduct(Long id);
 
-        // 파일명 생성 메서드 호출
-        String filename = FilenameUtil.make(file.getOriginalFilename());
-
-        File convertFile = new File(savePath +  filename);
-        convertFile.createNewFile();
-
-        try(FileOutputStream fout = new FileOutputStream(convertFile)) {
-            fout.write(file.getBytes());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        productMapper.imageUpdate(filename, id);
-    }
-
-    public int deleteProduct(Long id) {
-        return productMapper.deleteProduct(id);
-    }
-
-    public List<Product> getProductListByCategoryId(Long categoryId) throws Exception {
-        return productMapper.selectProductByCategoryId(categoryId);
-    }
-
-    public List<Product> getProductTodayList() {
-        return productMapper.selectProductTodayList();
-    }
+    /***
+     * 오늘의 상품 추천
+     */
+    List<Product> findProductTodayList();
 }
