@@ -1,41 +1,78 @@
 package kr.co.mentalK94.withus.domains;
 
 import lombok.*;
-import org.springframework.data.annotation.Transient;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Data
+@Builder
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Product implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class Product extends BaseTimeEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id; // 상품 id
+    /***
+     * 상품 기본키
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String name; // 상품명
+    /***
+     * 상품명
+     */
+    private String name;
 
-    private Long categoryId; // 상품 카테고리
+    /***
+     * 상품 가격
+     */
+    private int price;
 
-    private int price; // 상품 가격
+    /***
+     * 상품 재고수량
+     */
+    private int quantity;
 
-    private String manufacturer; // 상품 제조사
+    /***
+     * 상품 기본키
+     */
+    private int limitedQuantity; // 0개 : 제한없음 / 1개이상 : 제한
 
-    private int stock; // 상품 재고
+    /***
+     * 상품 설명
+     */
+    private String description;
 
-    private String description; // 상품 설명
+    /***
+     * 상품 이미지 주소
+     */
+    private String productImage;
 
-    private MultipartFile productImage; // 상품 이미지
+    /***
+     * 상품 평점
+     */
+    private double rating;
 
-    private String imageFileName; // 상품 이미지 명
+    /***
+     * 상품 배송소요일
+     */
+    private int requiredDay;
 
-    private double rating; // 상품 평점
+    /***
+     * 상품 판매상태
+     * 0: 판매 준비중 / 1: 판매 중 / 2: 판매 종료
+     */
+    private int status;
 
+    /***
+     * 상품 기본키
+     */
+    @Transient
     private int reviewCount; // 상품 평점 수
 
-    private int limitedQuantity; // 0개 : 제한없음 / 1개이상 : 제한
 }
